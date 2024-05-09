@@ -4,7 +4,7 @@ const Activities = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     body: column.text(),
-    distance: column.number(),
+    distance: column.number({ optional: true }),
   },
 });
 
