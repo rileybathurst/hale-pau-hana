@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { db, Activities } from 'astro:db';
+
+const activities = await db.select().from(Activities);
+---
+
+<Layout title="Rental Rates for Hale Pau Hana #28">
+  <main>
+
+    {
+      activities.map(({ id, body, distance }) => (
+        <article>
+          <p>{body}</p>
+          <p>{distance}</p>
+        </article>
+      ))
+    }
+
+<!--     The humpback whales may treat you to a show anytime between December and April.
+
+    View the local outrigger canoe clubs who work out in the early morning or late afternoon rowing by in front of our lanai.
+
+    There are plenty of pretty places to jog.
+
+    Another activity besides lounging on the beach, or snorkeling at either end of our beach, is to drive the road to Hana, stopping  to view water Falls and the rugged coastline of the east side of the Island.
+
+    Driving to the top of the Haleakala volcano is a great trip, from sea level to 10,000 feet. You could sign up for a commercial  bike ride down the volcano. The ride up to the top and a special bike is provides
+
+    It's fun to take an ATV tour of the Ulapalakua Ranch.  You need reservations; it's headquartered next to Tedeschi winery.
+
+    Friday night is Art Night in Lahaina. One or more of the many galleries will have an artist showing their works, usually serving  wine and hors d'oeuvres. Then stay for dinner at one of the many oceanfront restaurants.  Do get your picture taken with colorful parrots perched on your  shoulder as you stroll the waterfront outside the historic Pioneer Inn on Front Street.
+
+    About 8 miles north of our place, at Ma'alaea Bay, is the Maui Ocean Center (The Hawaiian Aquarium).  In the same area is the ancient Kealia Fishpond.
+
+    There is also a miniature golf park in the same area.
+
+    About 5 miles north of HPH  is  outstanding windsurfing and t is where the giant green turtles come to lay their eggs. You may see yellow  road signs warning of turtle crossings. (they don't last long)
+
+    There are surf lessons 3/8 miles north and good surfing is a few blocks north and a mile south of our place.
+
+    Windsurfing is also excellent  4 miles north and on the east side of the island.
+
+    Scuba or snorkeling abounds.
+
+    There is a dive shop about every other block, it seems. And nearest dive shop is  across the street from our complex..
+
+    On Tuesday (most of the time) the Resort Assoc provides a free Hula Show at 5pm on the lawn over looking the Beach.
+
+    On Thursday the Home owners organize a weekly Pu Pu Party. All guests are invited to bring something to share and your own beverage and enjoy the sunset with new friends.
+
+    Any night is a good night to BBQ on our lawn overlooking the beach and help the sun set.
+
+    email: leswright@sbcglobal.net to book at Hale Pau Hana -->
+
+  </main>
+</Layout>
+
+<style>
+
+</style>
