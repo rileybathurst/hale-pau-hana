@@ -1,9 +1,43 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import qs from "qs";
+
+// is this problematic that you aree going directly to the api reference what if you need a whole bunch
+let url = "http://45.79.101.19:1345/api/activities";
+
+const query = qs.stringify({
+  populate: {
+    name: {
+      populate: true,
+    },
+  },
+});
+
+const posts = await fetch(url + "?" + query).then((response) =>
+  response.json()
+);
+
+console.log(posts.data.map((post) => post.attributes.name));
+
+// const { posts } = Astro.props;
+// console.log(posts);
 ---
 
 <Layout title="Welcome to Astro.">
+  <h1>before</h1>
+
+  {posts.data.map((post) => (
+    <div>
+      <h2>{post.attributes.name}</h2>
+    </div>
+  ))}
+
+  <h1>after</h1>
+
+  <h1>Welcome to Astro</hjson1>
+
   <main>
+
     Hale Pau Hana #28 is a deluxe one bedroom condo on Kama'ole Beach II.
     Unit 28 is at the near end, second floor corner unit.
     Rent this 1 bedroom vacation rental from the owner.
@@ -28,9 +62,9 @@ import Layout from '../layouts/Layout.astro';
     padding: 1rem;
     width: 800px;
     max-width: calc(100% - 2rem);
-    color: white;
     font-size: 20px;
     line-height: 1.6;
+    color: black;
   }
   .astro-a {
     position: absolute;

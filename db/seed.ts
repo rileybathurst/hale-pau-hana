@@ -1,16 +1,14 @@
-import { db, Activities } from "astro:db";
+import { db, Activities, Projects } from "astro:db";
 
 // https://astro.build/db/seed
-export default async function seed() {
+export default async function () {
   await db.insert(Activities).values([
-    {
-      id: 1,
-      body: "The humpback whales may treat you to a show anytime between December and April.",
-    },
-    {
-      id: 2,
-      body: `About 5 miles north of HPH is  outstanding windsurfing and t is where the giant green turtles come to lay their eggs. You may see yellow  road signs warning of turtle crossings. (they don't last long)!`,
-      distance: 5,
-    },
+    { id: 1, body: "Hope you like Astro DB!" },
+    { id: 2, body: "Enjoy!", distance: 8 },
+  ]);
+
+  await db.insert(Projects).values([
+    { activitiesId: 1, work: "hey" },
+    { activitiesId: 1, work: "now!" },
   ]);
 }

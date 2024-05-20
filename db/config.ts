@@ -8,7 +8,14 @@ const Activities = defineTable({
   },
 });
 
+const Projects = defineTable({
+  columns: {
+    work: column.text(),
+    activitiesId: column.number({ references: () => Activities.columns.id }),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
-  tables: { Activities },
+  tables: { Activities, Projects },
 });
