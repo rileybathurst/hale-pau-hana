@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import qs from "qs";
 
 // is this problematic that you aree going directly to the api reference what if you need a whole bunch
-let url = "http://45.79.101.19:1345/api/activities";
+const url = "http://45.79.101.19:1345/api/activities";
 
 const query = qs.stringify({
   populate: {
@@ -13,11 +13,17 @@ const query = qs.stringify({
   },
 });
 
-const posts = await fetch(url + "?" + query).then((response) =>
+const posts = await fetch(`${url}?${query}`).then((response) =>
   response.json()
 );
 
-console.log(posts.data.map((post) => post.attributes.name));
+interface PostTypes {
+  id: string;
+  attributes: {
+    name: string;
+  };
+}
+console.log(posts.data.map(({ attributes }: PostTypes) => attributes.name));
 
 // const { posts } = Astro.props;
 // console.log(posts);
@@ -26,9 +32,9 @@ console.log(posts.data.map((post) => post.attributes.name));
 <Layout title="Welcome to Astro.">
   <h1>before</h1>
 
-  {posts.data.map((post) => (
+  {posts.data.map(({ attributes }: PostTypes) => (
     <div>
-      <h2>{post.attributes.name}</h2>
+      <h2>{attributes.name}</h2>
     </div>
   ))}
 
