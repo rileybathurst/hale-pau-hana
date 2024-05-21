@@ -1,16 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { db, eq, Activities, Projects } from 'astro:db';
+// import { db, eq, Activities, Projects } from 'astro:db';
 
-const activities = await db.select().from(Activities);
+/* const activities = await db.select().from(Activities);
 const projects = await db.select()
 .from(Projects)
 .innerJoin(Activities, eq(Projects.activitiesId, Activities.id))
 ;
-
+ */
 // up here is terminal
 console.log('🦄');
-console.log(projects);
+// console.log(projects);
 
 ---
 
@@ -22,18 +22,18 @@ console.log(projects);
 <Layout title="Rental Rates for Hale Pau Hana #28">
   <main>
 
-{
+<!-- {
       activities.map(({ id, body, distance }) => (
         <article>
           <p>{body}</p>
           <p>{distance}</p>
         </article>
       ))
-    }
+    } -->
 
 <hr />
 
-    {
+<!--     {
       projects.map(({ Projects, Activities }) => (
         <article>
           <h2>{Projects.work}</h2>
@@ -41,7 +41,7 @@ console.log(projects);
           <p>{Activities.body}</p>
         </article>
       ))
-    }
+    } -->
 
 
 
