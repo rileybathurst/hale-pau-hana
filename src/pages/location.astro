@@ -3,11 +3,16 @@ import Layout from "../layouts/Layout.astro";
 import qs from "qs";
 
 // is this problematic that you aree going directly to the api reference what if you need a whole bunch
-const url = `${import.meta.env.STRAPI_URL}api/activities`;
+
+
+// const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+const url = `${import.meta.env.STRAPI_URL}api/address`;
+
+console.log(url)
 
 const query = qs.stringify({
   populate: {
-    name: {
+    streetAddress: {
       populate: true,
     },
   },
@@ -17,13 +22,11 @@ const posts = await fetch(`${url}?${query}`).then((response) =>
   response.json()
 );
 
-interface PostTypes {
-  id: string;
-  attributes: {
-    name: string;
-  };
-}
-console.log(posts.data.map(({ attributes }: PostTypes) => attributes.name));
+
+console.log('url');
+
+// console.log(posts);
+// console.log(posts.data);
 
 // const { posts } = Astro.props;
 // console.log(posts);
@@ -32,34 +35,12 @@ console.log(posts.data.map(({ attributes }: PostTypes) => attributes.name));
 <Layout title="Welcome to Astro.">
   <h1>before</h1>
 
-  {posts.data.map(({ attributes }: PostTypes) => (
-    <div>
-      <h2>{attributes.name}</h2>
-    </div>
-  ))}
+{posts.data.attributes.streetAddress}
 
   <h1>after</h1>
 
-  <h1>Welcome to Astro</hjson1>
+  <h1>Location</hjson1>
 
-  <main>
-
-    Hale Pau Hana #28 is a deluxe one bedroom condo on Kama'ole Beach II.
-    Unit 28 is at the near end, second floor corner unit.
-    Rent this 1 bedroom vacation rental from the owner.
-    
-    Hale Pau Hana is located in the Kihei area of the Hawaiian Island of Maui.
-    
-    Unit 28 at Hale Pau Hana Resort
-    2480 South Kihei Rd., Kihei, Maui, Hawaii 
-    
-    530-559-2261
-    leswright@sbcglobal.net
-    
-    See Hale Pau Hana from the air with a drone fly over
-    
-
-  </main>
 </Layout>
 
 <style>
