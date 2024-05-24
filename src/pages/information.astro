@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import qs from "qs";
+
+const informationUrl = `${import.meta.env.STRAPI_URL}api/info`;
+const informationQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const information = await fetch(`${informationUrl}?${informationQuery}`).then((response) =>
+  response.json()
+);
+
+interface informationTypes {
+  children: {
+    text: string;
+  }[];
+}
+
+---
+
+<Layout title="">
+  <main>
+    <h2>Information</h2>
+  <ul>
+  {information.data.attributes.text[0].children.map((child: informationTypes) => 
+    child.children.map((child) => (
+      <li>
+      {child.text}
+    </li>
+    ))
+  )}
+  </ul>
+  </main>
+</Layout>
+
+<style>
+
+</style>

@@ -1,0 +1,43 @@
+/*------------------*/
+/* #LAYOUT */
+/*------------------*/
+
+.vulture {
+  max-width: var(--vulture);
+  flex-basis: var(--vulture);
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+  width: 100%;
+}
+
+.stork {
+  max-width: var(--stork);
+  flex-basis: var(--stork);
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+  width: 100%;
+}
+
+.condor {
+  max-width: var(--condor);
+  flex-basis: var(--condor);
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+  width: 100%;
+}
+
+.pelican {
+  max-width: var(--pelican);
+  flex-basis: var(--pelican);
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+  width: 100%;
+}
+
+.albatross {
+  max-width: var(--albatross);
+  flex-basis: var(--albatross);
+  margin-inline: auto;
+  padding-inline: 0.75rem;
+  width: 100%;
+}

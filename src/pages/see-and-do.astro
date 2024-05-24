@@ -1,50 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import { db, eq, Activities, Projects } from 'astro:db';
+import qs from "qs";
 
-/* const activities = await db.select().from(Activities);
-const projects = await db.select()
-.from(Projects)
-.innerJoin(Activities, eq(Projects.activitiesId, Activities.id))
-;
- */
-// up here is terminal
-console.log('🦄');
-// console.log(projects);
+const activityUrl = `${import.meta.env.STRAPI_URL}api/activity`;
+const activityQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const activity = await fetch(`${activityUrl}?${activityQuery}`).then((response) =>
+  response.json()
+);
+
+interface ActivityTypes {
+  children: {
+    text: string;
+  }[];
+}
 
 ---
 
-<!-- down here is the browser -->
-<script>
-  console.log('🦖');
-</script>
-
 <Layout title="Rental Rates for Hale Pau Hana #28">
   <main>
-
-<!-- {
-      activities.map(({ id, body, distance }) => (
-        <article>
-          <p>{body}</p>
-          <p>{distance}</p>
-        </article>
-      ))
-    } -->
-
-<hr />
-
-<!--     {
-      projects.map(({ Projects, Activities }) => (
-        <article>
-          <h2>{Projects.work}</h2>
-          <p>{Projects.activitiesId}</p>
-          <p>{Activities.body}</p>
-        </article>
-      ))
-    } -->
-
-
-
+    <h2>Things to see and do</h2>
+  <ul>
+  {activity.data.attributes.text[0].children.map((child: ActivityTypes) => 
+    child.children.map((child) => (
+      <li>
+      {child.text}
+    </li>
+    ))
+  )}
+  </ul>
   </main>
 </Layout>
 

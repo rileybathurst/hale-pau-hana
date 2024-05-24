@@ -1,10 +1,86 @@
 ---
+import '../styles/app.css';
+import qs from "qs";
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
 import { ViewTransitions } from 'astro:transitions';
+
+const addressUrl = `${import.meta.env.STRAPI_URL}api/address`;
+const addressQuery = qs.stringify({
+  populate: {
+    streetAddress: {
+      populate: true,
+    },
+    addressLocality : {
+      populate: true,
+    },
+    addressRegion : {
+      populate: true,
+    },
+    addressCountry : {
+      populate: true,
+    },
+    postalCode : {
+      populate: true,
+    },
+    unit : {
+      populate: true,
+    },
+    island : {
+      populate: true,
+    },
+    building : {
+      populate: true,
+    },
+  },
+});
+
+const address = await fetch(`${addressUrl}?${addressQuery}`).then((response) =>
+  response.json()
+);
+
+const contactUrl = `${import.meta.env.STRAPI_URL}api/contact`;
+const contactQuery = qs.stringify({
+  populate: {
+    name: {
+      populate: true,
+    },
+    email: {
+      populate: true,
+    },
+    phone : {
+      populate: true,
+    },
+    postal : {
+      populate: true,
+    },
+  },
+});
+
+const contact = await fetch(`${contactUrl}?${contactQuery}`).then((response) =>
+  response.json()
+);
+
+const aboutUrl = `${import.meta.env.STRAPI_URL}api/about`;
+const aboutQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const about = await fetch(`${aboutUrl}?${aboutQuery}`).then((response) =>
+  response.json()
+);
+
+interface ContactPostalTypes {
+  text: string;
+}
+
 ---
 
 <!doctype html>
@@ -20,43 +96,54 @@ import { ViewTransitions } from 'astro:transitions';
 	</head>
 	<>
 		<header>
-			<h1>{title}</h1>
-			<nav>
-				<a href="/">Home</a>
-				<a href="/directions">directions</a>
-				<a href="/floorplan">floorplan</a>
-				<a href="/rates">rates</a>
-				<a href="/see-and-do">see and do</a>
+			<h1><a href="/">{address.data.attributes.building}</a></h1>
+      <h2>{about.data.attributes.text[0].children.map((child:ContactPostalTypes) => child.text)}</h2>
 
-			</nav>
+<nav>
+  <ul>
+    <li><a href="/directions">Directions</a></li>
+    <li><a href="/information">Information</a></li>
+    <li><a href="/see-and-do">Activities</a></li>
+    <li><a href="/departure">Departure</a></li>
+  </ul>
+</nav>
+<address>
+  {address.data.attributes.streetAddress}<br />
+  {address.data.attributes.addressLocality}<br />
+  {address.data.attributes.island} - {address.data.attributes.addressRegion}<br />
+</address>
+
 		</header>
-		<slot />
+    <hr class="condor" />
+
+<slot />
+
+<hr class="condor" />
+	<footer>
+    <p>{contact.data.attributes.name}</p>
+    <p>{contact.data.attributes.email}</p>
+    <p>{contact.data.attributes.phone}</p>
+
+    <!-- TODO: needs split -->
+{contact.data.attributes.postal[0].children.map((child:ContactPostalTypes) => child.text)}
+    <hr />
+		<p>{address.data.attributes.building}</p>
+		<p>&copy; {new Date().getFullYear()}</p>
+	</footer>
 	</body>
 </html>
 
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-	}
-	html {
-		font-family: system-ui, sans-serif;
-	}
-	main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
   }
-	a {
-		color: blue;
-	}
 
-	ul {
-		list-style: none;
-		padding: 0;
-	}
+  header, footer {
+    max-width: var(--condor);
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
 </style>

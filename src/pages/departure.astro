@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import qs from "qs";
+
+const departureUrl = `${import.meta.env.STRAPI_URL}api/departure`;
+const departureQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const departure = await fetch(`${departureUrl}?${departureQuery}`).then((response) =>
+  response.json()
+);
+
+interface ChildrenTypes {
+  children: {
+    text: string;
+  }[];
+}
+---
+
+<Layout title="Rental Rates for Hale Pau Hana #28">
+  <main>
+      <h2>Departure</h2>
+    <ul>
+    {departure.data.attributes.text[0].children.map((child: ChildrenTypes) => 
+      child.children.map((child) => (
+        <li>
+        {child.text}
+      </li>
+      ))
+    )}
+    </ul>
+  </main>
+</Layout>

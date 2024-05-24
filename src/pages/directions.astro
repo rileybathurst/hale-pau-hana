@@ -1,61 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import qs from "qs";
+
+const directionUrl = `${import.meta.env.STRAPI_URL}api/direction`;
+const directionQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const direction = await fetch(`${directionUrl}?${directionQuery}`).then((response) =>
+  response.json()
+);
+
+interface ActivityTypes {
+  children: {
+    text: string;
+  }[];
+}
+
 ---
 
 <Layout title="Directions">
   <main>
-    A Beachfront Maui Vacation Rental
-at
-Hale Pau Hana Resort
-2480 South Kihei Rd. #28,
-Kihei, Maui, Hawaii 
 
-Hale Pau Hana Unit 28
-
-A Private Condo
-
-<ul>
-  <li>Directions from the Kahului Airport to Hale Pau Hana</li>
-  <li>Pick up a Maui driving map at information booth in the baggage pick up area at the airport.</li>
-  <li>After you pick up your rental car head for Kihei.</li>
-  <li>You might want to stop at Costco which is the first light about a mile from the airport.</li>
-  <li>Continue on Dairy Road to Hwy 350 and turn left at the 6th stop light. (Big church on left at the corner.)</li>
-  <li>Follow Hwy 350 to Kihei (Mokulele Hwy) 350 changes to Hwy 311, but you will not notice.</li>
-  <li>The Mokulele Hwy changes to the Piilani Hwy (Highway 30) without you noticing it.</li>
-  <li>And turn right onto Ke ali'i Alanui.</li>
-  <li>At the bottom of the hill turn left (south) on to South Kihei Rd</li>
-  <li>Turn right into the 3rd condo complex driveway and bear left and go all the way to the south end of the parking lot.</li>
-  <li>Park as far to the end as possible and take the end stairs to the 2nd floor.</li>
-  <li>First door on your left is home.</li>
-  <li>Open the lock box and use key to open door and then replace key in case of a lockout situation.</li>
-  <li>Two keys will be inside on the left hanging on the mermaid which you will replace upon departure.</li>
-  <li>You will be given the combination after your final payment has been received via email.</li>
-  <li>Call to get the door combo cell 530-559-2261 or 530-613-1155</li>
-  <li>Check-in time is 3 p.m.</li>
-</ul>
-<ul>
-
-  <li>Departure information:</li>
-  <ol>
-    <li>Leave your two keys on the mermaids for the next guest.</li>
-    <li>Be sure you have returned key to lock box when you first checked it.</li>
-    <li>Please empty garbage and start dishwasher before you leave.</li>
-    <li>Check out time is 11 a.m.</li>
-  </ol>
-</ul>
-<ol>
-    <li>Please wash any sand or grass off your feet and/or beach toys and chairs before entering the unit</li>
-    <li>Please do not sit on living room furniture with damp bathing suits.</li>
-    <li>Mid-day airport departures are crowded with several flights processing passengers at the same time.</li>
-    <li>Evening flights are relatively fast and easy.</li>
-    <li>Drop off your partner with the luggage while you take your rental car back.</li>
-    <li>If you are flying back to the mainland, you must have a bug inspection for your checked baggage before you go to the airline check-in counter. They will x-ray for fruit in your bags and put an OK sticker on the handle.</li>
-    <li>Don't get to the front of the airline check-in line and find out that you have to go back and get your buggy fruit inspection.</li>
-    <li>You may take back Maui onions (even from the grocery store) and some of the tropical plants if they have been packaged commercially.</li>
-  </ol>
-</ul>
+<h1>Directions</h1>
+    <h2>Kahului Airport to  Hale Pau Hana</h2>
+    <ul>
+    {direction.data.attributes.text[0].children.map((child: ActivityTypes) => 
+      child.children.map((child) => (
+        <li>
+        {child.text}
+      </li>
+      ))
+    )}
+    </ul>
+</main>
 </Layout>
-
-<style>
-
-</style>
