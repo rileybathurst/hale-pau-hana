@@ -1,122 +1,41 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import qs from "qs";
+// import Markdown from "react-markdown";
 
 // is this problematic that you aree going directly to the api reference what if you need a whole bunch
-const url = `${import.meta.env.STRAPI_URL}api/activities`;
+const url = `${import.meta.env.STRAPI_URL}api/activity`;
 
 const query = qs.stringify({
   populate: {
-    name: {
+    text: {
       populate: true,
     },
   },
 });
 
-const posts = await fetch(`${url}?${query}`).then((response) =>
+const activity = await fetch(`${url}?${query}`).then((response) =>
   response.json()
 );
 
-interface PostTypes {
-  id: string;
-  attributes: {
-    name: string;
-  };
+interface ActivityTypes {
+  children: {
+    text: string;
+  }[];
 }
-console.log(posts.data.map(({ attributes }: PostTypes) => attributes.name));
 
-// const { posts } = Astro.props;
-// console.log(posts);
 ---
-
-<Layout title="Welcome to Astro.">
-  <h1>before</h1>
-
-  {posts.data.map(({ attributes }: PostTypes) => (
-    <div>
-      <h2>{attributes.name}</h2>
-    </div>
-  ))}
-
-  <h1>after</h1>
-
-  <h1>Welcome to Astro</hjson1>
-
+<Layout title="Welcome to.">
   <main>
-
-    Hale Pau Hana #28 is a deluxe one bedroom condo on Kama'ole Beach II.
-    Unit 28 is at the near end, second floor corner unit.
-    Rent this 1 bedroom vacation rental from the owner.
-    
-    Hale Pau Hana is located in the Kihei area of the Hawaiian Island of Maui.
-    
-    Unit 28 at Hale Pau Hana Resort
-    2480 South Kihei Rd., Kihei, Maui, Hawaii 
-    
-    530-559-2261
-    leswright@sbcglobal.net
-    
-    See Hale Pau Hana from the air with a drone fly over
-    
-
+  <h1>Welcome to Astro</h1>
+  <ul>
+  {activity.data.attributes.text[0].children.map((child: ActivityTypes) => 
+    child.children.map((child) => (
+      <li>
+      {child.text}
+    </li>
+    ))
+  )}
+  </ul>
   </main>
 </Layout>
-
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    font-size: 20px;
-    line-height: 1.6;
-    color: black;
-  }
-  .astro-a {
-    position: absolute;
-    top: -32px;
-    left: 50%;
-    transform: translatex(-50%);
-    width: 220px;
-    height: auto;
-    z-index: -1;
-  }
-  h1 {
-    font-size: 4rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    margin-bottom: 1em;
-  }
-  .text-gradient {
-    background-image: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 400%;
-    background-position: 0%;
-  }
-  .instructions {
-    margin-bottom: 2rem;
-    border: 1px solid rgba(var(--accent-light), 25%);
-    background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-    padding: 1.5rem;
-    border-radius: 8px;
-  }
-  .instructions code {
-    font-size: 0.8em;
-    font-weight: bold;
-    background: rgba(var(--accent-light), 12%);
-    color: rgb(var(--accent-light));
-    border-radius: 4px;
-    padding: 0.3em 0.4em;
-  }
-  .instructions strong {
-    color: rgb(var(--accent-light));
-  }
-  .link-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-    gap: 2rem;
-    padding: 0;
-  }
-</style>
