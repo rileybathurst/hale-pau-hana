@@ -6,7 +6,7 @@
   max-width: var(--vulture);
   flex-basis: var(--vulture);
   margin-inline: auto;
-  padding-inline: 0.75rem;
+  padding-inline: var(--kosciuszko);
   width: 100%;
 }
 
@@ -14,7 +14,7 @@
   max-width: var(--stork);
   flex-basis: var(--stork);
   margin-inline: auto;
-  padding-inline: 0.75rem;
+  padding-inline: var(--kosciuszko);
   width: 100%;
 }
 
@@ -22,7 +22,7 @@
   max-width: var(--condor);
   flex-basis: var(--condor);
   margin-inline: auto;
-  padding-inline: 0.75rem;
+  padding-inline: var(--kosciuszko);
   width: 100%;
 }
 
@@ -30,7 +30,7 @@
   max-width: var(--pelican);
   flex-basis: var(--pelican);
   margin-inline: auto;
-  padding-inline: 0.75rem;
+  padding-inline: var(--kosciuszko);
   width: 100%;
 }
 
@@ -38,6 +38,6 @@
   max-width: var(--albatross);
   flex-basis: var(--albatross);
   margin-inline: auto;
-  padding-inline: 0.75rem;
+  padding-inline: var(--kosciuszko);
   width: 100%;
 }
