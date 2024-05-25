@@ -1,24 +1,17 @@
-// this is the Name.stories.tsx file
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Color } from './Color';
+import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
+import { Color } from "./Color";
 
-type ColorPropsAndCustomArgs = React.ComponentProps<typeof Color> & { footer?: string };
-
-const meta: Meta<ColorPropsAndCustomArgs> = {
+const meta = {
   component: Color,
-  render: ({ footer, ...args }) => (
-    <Color {...args}>
-      <footer>{footer}</footer>
-    </Color>
-  ),
-};
+  args: { onClick: fn() },
+} satisfies Meta<typeof Color>;
+
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
     primary: true,
-    label: 'Button',
   },
 };

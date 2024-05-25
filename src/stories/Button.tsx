@@ -10,7 +10,6 @@ export const Button = ({
   primary = false,
   ...props
 }: ButtonProps) => {
-  // label = 'test';
 
   return (
     <button
