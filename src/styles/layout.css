@@ -18,7 +18,9 @@
   width: 100%;
 }
 
-.condor {
+.condor,
+header,
+footer {
   max-width: var(--condor);
   flex-basis: var(--condor);
   margin-inline: auto;

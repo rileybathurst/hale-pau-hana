@@ -1,6 +1,8 @@
 ---
 import '../styles/app.css';
 import qs from "qs";
+import SmallMenu from '../components/SmallMenu';
+
 interface Props {
 	title: string;
 }
@@ -81,6 +83,15 @@ interface ContactPostalTypes {
   text: string;
 }
 
+function FormatPhoneNumber({ phoneNumberString }: { phoneNumberString: number }) {
+  const cleaned = `${phoneNumberString}`.replace(/\D/g, '');
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+  if (match) {
+    return `(${match[1]}) ${match[2]}-${match[3]}`;
+  }
+}
+
 ---
 
 <!doctype html>
@@ -99,19 +110,23 @@ interface ContactPostalTypes {
 			<h1><a href="/">{address.data.attributes.building}</a></h1>
       <h2>{about.data.attributes.text[0].children.map((child:ContactPostalTypes) => child.text)}</h2>
 
-<nav>
+<SmallMenu client:load />
+
+<!-- <nav>
   <ul>
     <li><a href="/directions">Directions</a></li>
     <li><a href="/information">Information</a></li>
     <li><a href="/see-and-do">Activities</a></li>
     <li><a href="/departure">Departure</a></li>
   </ul>
-</nav>
+</nav> -->
 <address>
   {address.data.attributes.streetAddress}<br />
   {address.data.attributes.addressLocality}<br />
   {address.data.attributes.island} - {address.data.attributes.addressRegion}<br />
 </address>
+
+
 
 		</header>
     <hr class="condor" />
@@ -121,29 +136,19 @@ interface ContactPostalTypes {
 <hr class="condor" />
 	<footer>
     <p>{contact.data.attributes.name}</p>
-    <p>{contact.data.attributes.email}</p>
-    <p>{contact.data.attributes.phone}</p>
+    <p><a href={`mailto:${contact.data.attributes.email}?subject=${address.data.attributes.building}`}>
+      {contact.data.attributes.email}
+    </a></p>
+    <p><a href={`tel:${contact.data.attributes.phone}`}>
+      <FormatPhoneNumber phoneNumberString={contact.data.attributes.phone} />
+    </a></p>
 
-    <!-- TODO: needs split -->
-{contact.data.attributes.postal[0].children.map((child:ContactPostalTypes) => child.text)}
+    <p class="react-markdown">
+      {contact.data.attributes.postal[0].children.map((child:ContactPostalTypes) => child.text)}
+    </p>
     <hr />
-		<p>{address.data.attributes.building}</p>
-		<p>&copy; {new Date().getFullYear()}</p>
+		<p class="text-center">{address.data.attributes.building}</p>
+		<p class="text-center">&copy; {new Date().getFullYear()}</p>
 	</footer>
 	</body>
 </html>
-
-<style>
-  body {
-    font-family: var(--body_font);
-    margin: 0;
-    padding: 0;
-    background-color: var(--brilliance);
-  }
-
-  header, footer {
-    max-width: var(--condor);
-    margin-inline: auto;
-    padding-inline: var(--vinson);
-  }
-</style>

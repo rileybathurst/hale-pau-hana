@@ -24,15 +24,15 @@ interface ChildrenTypes {
 
 <Layout title="Rental Rates for Hale Pau Hana #28">
   <main>
-      <h2>Departure</h2>
+    <h2>Departure</h2>
     <ul>
-    {departure.data.attributes.text[0].children.map((child: ChildrenTypes) => 
-      child.children.map((child) => (
-        <li>
-        {child.text}
-      </li>
-      ))
-    )}
+      {departure.data.attributes.text[0].children.map((child: ChildrenTypes) => 
+        child.children.map((child) => (
+          <li>
+          {child.text}
+        </li>
+        ))
+      )}
     </ul>
   </main>
 </Layout>

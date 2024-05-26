@@ -1,0 +1,53 @@
+/*------------------------------------*/
+/* #TYPOGRAPHY */
+/*------------------------------------*/
+
+h1,
+.everest {
+  font-size: var(--everest);
+}
+
+h2,
+.aconcagua {
+  font-size: var(--aconcagua);
+}
+
+h3,
+.denali {
+  font-size: var(--denali);
+}
+
+h4,
+.kilimanjaro {
+  font-size: var(--kilimanjaro);
+}
+
+h5,
+.elbrus {
+  font-size: var(--elbrus);
+}
+
+h6,
+p,
+.vinson {
+  font-size: var(--vinson);
+}
+
+small,
+.kosciuszko {
+  font-size: var(--kosciuszko);
+}
+
+address {
+  font-style: normal;
+}
+
+/*------------------------------------*/
+
+.react-markdown {
+  white-space: pre-wrap;
+}
+
+.text-center {
+  text-align: center;
+}

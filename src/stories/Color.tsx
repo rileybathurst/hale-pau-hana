@@ -21,7 +21,7 @@ function ColorCard({ color, variables }: ColorCardTypes) {
         <div
           key={variable}
           className={`color-card ${color}-${variable}`} >
-          {color} - {variable}
+          {color}-{variable}
           <div
             style={{
               height: '100px',
@@ -53,6 +53,7 @@ export const Color = ({
       {...props}
     >
       <ColorCard color="mango" variables={[100, 200, 300, 400]} />
+      <ColorCard color="palm" variables={[100, 200, 300, 400]} />
     </main>
   );
 };

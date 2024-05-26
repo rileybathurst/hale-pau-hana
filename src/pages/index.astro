@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import qs from "qs";
+import Counter from '../components/Counter.jsx';
 
 const activityUrl = `${import.meta.env.STRAPI_URL}api/activity`;
 const activityQuery = qs.stringify({
@@ -120,6 +121,10 @@ interface RateTypes {
 ---
 <Layout title={`Welcome to ${address.data.attributes.building}`}`>
   <main>
+
+    <!-- <Counter client:visible/> -->
+
+
 <h2>Rates</h2>
 <p>If you want to reserve a date or have comments or questions, please email or call</p>
 <p>{rate.data.attributes.direct[0].children.map((child: RateTypes) => child.text)}</p>
