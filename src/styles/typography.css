@@ -42,6 +42,10 @@ address {
   font-style: normal;
 }
 
+.font-hand {
+  font-family: "pacifico", cursive;
+}
+
 /*------------------------------------*/
 
 .react-markdown {

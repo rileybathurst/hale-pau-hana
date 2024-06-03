@@ -1,3 +1,6 @@
+// ? why cant i just have closed and open?
+// first is not closed
+
 import React, { useState, useEffect, useRef } from 'react';
 
 import MenuList from './MenuList';
@@ -5,116 +8,134 @@ import MenuList from './MenuList';
 
 export default function SmallMenu() {
 
-
-  const CloseLoop = () => {
-
-    function handleClick() {
-      console.log('click');
-      setSlide('close');
-    }
-
-    return (
-      <button
-        type="button"
-        className="button-styles"
-        onClick={() => setSlide('close')}
-      // onClick={handleClick()}
-      >
-        <span
-          style={{
-            transform: 'translateY(-2rem)'
-          }}
-          className="span-styles"
-        >
-          CLOSE<br />MENU
-        </span>
-      </button>
-
-    )
-  }
-
   const [slide, setSlide] = useState('firstload');
-  console.log(slide);
+  // console.log(slide);
   const [amount, setAmount] = useState(0);
   const ref = useRef();
 
 
   useEffect(() => {
-    console.log(ref.current.clientHeight);
-    setAmount(ref.current.clientHeight);
-  });
+    if (ref.current) {
+      console.log(ref.current.clientHeight);
+      setAmount(ref.current.clientHeight);
+    }
+  }, [ref.current]);
 
   if (slide === "firstload") {
-    console.log('firstload');
+
+    useEffect(() => {
+      setAmount(ref.current.clientHeight);
+    });
+
+    console.log(slide);
+
     return (
-      <div className='menu__small'
+      <div className='small-menu'
         style={{
           height: '2rem',
         }}
       >
-        <CloseLoop />
+        <button
+          className="button-spinner"
+          onClick={() => setSlide('open')}
+          type='button'
+        >
+          <span>
+            OPEN<br />
+            MENU
+          </span>
+        </button>
         <nav
-          className='menu__small'
           style={{
-            transform: 'translateY(-' + amount + 'px)',
-            marginBottom: '-' + amount + 'px',
+            transform: `translateY(-${amount}px)`,
+            marginBottom: `-${amount}px`,
             visibility: "hidden",
           }}
           ref={ref}
         >
-          {/* <MenuList /> */}
+          <menu>
+            <MenuList />
+          </menu>
         </nav>
       </div >
     );
   }
 
-  if (slide === "menu") {
-    console.log('menu');
+  if (slide === "open") {
+
+    useEffect(() => {
+      setAmount(ref.current.clientHeight);
+    });
+
+    console.log(slide);
+
     return (
-      <div className='menu__small'>
-        <CloseLoop />
+      <div className='small-menu'>
+        <button
+          className="button-spinner"
+          onClick={() => setSlide('closed')}
+          type="button"
+        >
+          <span>
+            CLOSE<br />
+            MENU
+          </span>
+        </button>
         <nav
-          className='menu__small'
           style={{
-            transform: 'translateY(-' + amount + 'px)',
-            marginBottom: '-' + amount + 'px',
-            visibility: "hidden",
+            transform: 'translateY(0)',
+            marginBottom: `-${amount}px`,
+
           }}
           ref={ref}
         >
-          <MenuList />
+          <menu>
+            <MenuList />
+          </menu>
         </nav>
       </div>
     );
   }
 
-  console.log('else');
-  return (
-    <div className='menu__small'
-      style={{
-        height: '2rem',
-      }}
-    >
-      <button
-        className="button-styles"
-        type="button"
-      // onClick={() => setSlide('menu')}
-      >
-        <span
-          style={{ transform: 'translateY(0)' }}
-          className="span-styles"
-        >CLOSE<br />MENU
-        </span>
-      </button>
-      <nav
+  if (slide === "closed") {
+
+    console.log(slide);
+
+    useEffect(() => {
+      setAmount(ref.current.clientHeight);
+    });
+
+    return (
+      <div className='small-menu'
         style={{
-          transform: 'translateY(0)',
-          // marginBottom: '-' + amount + 'px',
+          height: '2rem',
         }}
-      // ref={ref}
       >
-        <MenuList />
-      </nav>
-    </div>
-  );
+        <button
+          className="button-styles"
+          type="button"
+          onClick={() => setSlide('open')}
+        >
+          <span>
+            OPEN<br />
+            MENU
+          </span>
+        </button>
+        <nav
+          style={{
+            transform: `translateY(-${amount}px)`,
+            marginBottom: `-${amount}px`,
+            visibility: "hidden",
+          }}
+          ref={ref}
+        >
+          <menu>
+            <MenuList />
+          </menu>
+        </nav>
+      </div>
+    );
+  }
+
+  return null;
 }

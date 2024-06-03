@@ -1,7 +1,9 @@
 ---
 import '../styles/app.css';
+import "@fontsource/pacifico"; // Defaults to weight 400.
 import qs from "qs";
 import SmallMenu from '../components/SmallMenu';
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 interface Props {
 	title: string;
@@ -107,29 +109,25 @@ function FormatPhoneNumber({ phoneNumberString }: { phoneNumberString: number })
 	</head>
 	<>
 		<header>
-			<h1><a href="/">{address.data.attributes.building}</a></h1>
-      <h2>{about.data.attributes.text[0].children.map((child:ContactPostalTypes) => child.text)}</h2>
+			<h1 class="font-hand"><a href="/">{address.data.attributes.building}</a></h1>
+      <h2 class="kilimanjaro">{about.data.attributes.text[0].children.map((child:ContactPostalTypes) => child.text)}</h2>
 
 <SmallMenu client:load />
 
-<!-- <nav>
+<nav class="big-boy">
   <ul>
     <li><a href="/directions">Directions</a></li>
     <li><a href="/information">Information</a></li>
     <li><a href="/see-and-do">Activities</a></li>
     <li><a href="/departure">Departure</a></li>
   </ul>
-</nav> -->
+</nav>
 <address>
   {address.data.attributes.streetAddress}<br />
   {address.data.attributes.addressLocality}<br />
   {address.data.attributes.island} - {address.data.attributes.addressRegion}<br />
 </address>
-
-
-
 		</header>
-    <hr class="condor" />
 
 <slot />
 
@@ -143,9 +141,8 @@ function FormatPhoneNumber({ phoneNumberString }: { phoneNumberString: number })
       <FormatPhoneNumber phoneNumberString={contact.data.attributes.phone} />
     </a></p>
 
-    <p class="react-markdown">
-      {contact.data.attributes.postal[0].children.map((child:ContactPostalTypes) => child.text)}
-    </p>
+    <BlocksRenderer content={contact.data.attributes.postal} />
+
     <hr />
 		<p class="text-center">{address.data.attributes.building}</p>
 		<p class="text-center">&copy; {new Date().getFullYear()}</p>

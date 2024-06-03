@@ -1,0 +1,71 @@
+/*------------------------------------*/
+/* #MENU */
+/*------------------------------------*/
+
+.small-menu {
+  z-index: var(--emergent);
+
+  @media (min-width: 30rem) {
+    display: none;
+  }
+
+  button {
+    width: 100%;
+    height: 2rem;
+    overflow: hidden;
+    line-height: 1rem;
+    background-color: var(--palm);
+    color: var(--brilliance);
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+
+    /* needed to for the overflow */
+    span {
+      position: fixed; /* I never like these things but it's needed here */
+      height: 1rem;
+      line-height: 2rem;
+      transition: 2s ease;
+      margin-block-start: -1rem; /* I dont know why I have to add this something about defaults probably */
+    }
+  }
+
+  nav {
+    background-color: white;
+  }
+
+  menu {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    text-align: center;
+  }
+}
+
+.big-boy ul {
+  display: none;
+
+  @media (min-width: 30rem) {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none; /* reset */
+    padding: 0; /* reset */
+    margin: 0; /* reset */
+
+    > * {
+      flex: 1 1 auto;
+      text-align: center;
+    }
+  }
+}

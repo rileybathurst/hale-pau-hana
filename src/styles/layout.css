@@ -43,3 +43,9 @@ footer {
   padding-inline: var(--kosciuszko);
   width: 100%;
 }
+
+/*------------------------------------*/
+
+address {
+  padding: var(--vinson);
+}

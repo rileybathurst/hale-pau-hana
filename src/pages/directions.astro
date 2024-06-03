@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import qs from "qs";
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
 const directionUrl = `${import.meta.env.STRAPI_URL}api/direction`;
 const directionQuery = qs.stringify({
@@ -15,27 +16,12 @@ const direction = await fetch(`${directionUrl}?${directionQuery}`).then((respons
   response.json()
 );
 
-interface ActivityTypes {
-  children: {
-    text: string;
-  }[];
-}
-
 ---
 
 <Layout title="Directions">
   <main>
-
-<h1>Directions</h1>
-    <h2>Kahului Airport to  Hale Pau Hana</h2>
-    <ul>
-    {direction.data.attributes.text[0].children.map((child: ActivityTypes) => 
-      child.children.map((child) => (
-        <li>
-        {child.text}
-      </li>
-      ))
-    )}
-    </ul>
-</main>
+    <h2 class="font-hand">Directions</h2>
+    <h3 class="">Kahului Airport to  Hale Pau Hana</h3>
+    <BlocksRenderer content={direction.data.attributes.text} />
+  </main>
 </Layout>
