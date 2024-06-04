@@ -1,6 +1,3 @@
-// ? why cant i just have closed and open?
-// first is not closed
-
 import React, { useState, useEffect, useRef } from 'react';
 
 import MenuList from './MenuList';
@@ -16,10 +13,11 @@ export default function SmallMenu() {
 
   useEffect(() => {
     if (ref.current) {
+      console.log(ref.current);
       console.log(ref.current.clientHeight);
       setAmount(ref.current.clientHeight);
     }
-  }, [ref.current]);
+  }, []);
 
   if (slide === "firstload") {
 
