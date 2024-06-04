@@ -4,10 +4,9 @@
 
 .small-menu {
   z-index: var(--emergent);
-  /* ! testing
   @media (min-width: 30rem) {
     display: none;
-  } */
+  }
 
   button {
     width: 100%;
