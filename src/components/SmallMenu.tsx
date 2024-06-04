@@ -8,21 +8,24 @@ export default function SmallMenu() {
   const [slide, setSlide] = useState('firstload');
   // console.log(slide);
   const [amount, setAmount] = useState(0);
-  const ref = useRef();
 
+  // const ref = useRef();
+  const ref = useRef<HTMLElement | null>(null);
+
+  interface currentTypes {
+    current: {
+      clientHeight: number;
+    };
+  }
 
   useEffect(() => {
-    if (ref.current) {
-      console.log(ref.current);
-      console.log(ref.current.clientHeight);
-      setAmount(ref.current.clientHeight);
-    }
+    ref.current ? setAmount(ref.current.clientHeight) : null;
   }, []);
 
   if (slide === "firstload") {
 
     useEffect(() => {
-      setAmount(ref.current.clientHeight);
+      ref.current ? setAmount(ref.current.clientHeight) : null;
     });
 
     console.log(slide);
@@ -62,7 +65,7 @@ export default function SmallMenu() {
   if (slide === "open") {
 
     useEffect(() => {
-      setAmount(ref.current.clientHeight);
+      ref.current ? setAmount(ref.current.clientHeight) : null;
     });
 
     console.log(slide);
@@ -100,7 +103,7 @@ export default function SmallMenu() {
     console.log(slide);
 
     useEffect(() => {
-      setAmount(ref.current.clientHeight);
+      ref.current ? setAmount(ref.current.clientHeight) : null;
     });
 
     return (
