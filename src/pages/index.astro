@@ -99,7 +99,7 @@ const amenityQuery = qs.stringify({
     },
     images: {
       populate: true,
-      fields: ["name", "width", "height", "url"],
+      // fields: ["name", "width", "height", "url", "alternativeText"],
     },
   },
 });
@@ -107,6 +107,8 @@ const amenityQuery = qs.stringify({
 const amenity = await fetch(`${amenityUrl}?${amenityQuery}`).then((response) =>
   response.json()
 );
+
+// console.log(amenity.data.attributes.map((image: amenityImageTypes) => image));
 
 // const postImage = featuredImage.data.attributes.url || null;
 
@@ -120,6 +122,7 @@ interface amenityImageTypes {
     url: string;
     width: number;
     height: number;
+    alternativeText?: string;
   };
 }
 
@@ -129,18 +132,24 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
 
 <Layout title={`Welcome to ${address.data.attributes.building}`} `>
   <div class="pelican wrap">
-    <Image
-      src={`${awsImages}hale-pau-hana00005.jpeg`}
-      alt="the apartment above the beach."
-      class="poster"
-      inferSize={true}
-    />
-    <Image
-      src={`${awsImages}hale-pau-hana00004.jpeg`}
-      alt="sunset on the beach."
-      class="poster"
-      inferSize={true}
-    />
+    <!-- astro images need this on the flex in safari but it breaks the auto height -->
+    <!-- TODO: test on grid not flex -->
+    <div>
+      <Image
+        src={`${awsImages}hale-pau-hana00005.jpeg`}
+        alt="the apartment above the beach."
+        class="poster"
+        inferSize={true}
+      />
+    </div>
+    <div>
+      <Image
+        src={`${awsImages}hale-pau-hana00004.jpeg`}
+        alt="sunset on the beach."
+        class="poster"
+        inferSize={true}
+      />
+    </div>
   </div>
   <main>
     <h2 class="font-hand">Rates</h2>
@@ -160,18 +169,21 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
   <div class="pelican wrap">
     {
       amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
-        <>
+        <div>
           <Image
             src={`${awsImages}${image.attributes.name}`}
-            alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
+            alt={
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              "apaartment image"
+            }
             inferSize={true}
           />
-          <Image
+          {/* <Image
             src={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.url}`}
             alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
             inferSize={true}
-          />
-        </>
+          /> */}
+        </div>
       ))
     }
   </div>
@@ -184,16 +196,20 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
   </section>
 
   <div class="pelican wrap">
-    <Image
-      src={`${awsImages}hale-pau-hana00008.jpeg`}
-      alt="the apartment above the beach."
-      inferSize={true}
-    />
-    <Image
-      src={`${awsImages}hale-pau-hana00003.jpeg`}
-      alt="the apartment above the beach."
-      inferSize={true}
-    />
+    <div>
+      <Image
+        src={`${awsImages}hale-pau-hana00008.jpeg`}
+        alt="the apartment above the beach."
+        inferSize={true}
+      />
+    </div>
+    <div>
+      <Image
+        src={`${awsImages}hale-pau-hana00003.jpeg`}
+        alt="the apartment above the beach."
+        inferSize={true}
+      />
+    </div>
   </div>
   <section>
     <h2>Things to see and do</h2>
