@@ -28,7 +28,7 @@ export default function SmallMenu() {
       ref.current ? setAmount(ref.current.clientHeight) : null;
     });
 
-    console.log(slide);
+    // console.log(slide);
 
     return (
       <div className='small-menu'
@@ -68,7 +68,7 @@ export default function SmallMenu() {
       ref.current ? setAmount(ref.current.clientHeight) : null;
     });
 
-    console.log(slide);
+    // console.log(slide);
 
     return (
       <div className='small-menu'>
@@ -100,7 +100,7 @@ export default function SmallMenu() {
 
   if (slide === "closed") {
 
-    console.log(slide);
+    // console.log(slide);
 
     useEffect(() => {
       ref.current ? setAmount(ref.current.clientHeight) : null;

@@ -5,13 +5,8 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--brilliance);
-}
-
-main,
-section {
-  max-width: var(--condor);
-  margin-inline: auto;
-  padding-inline: var(--kosciuszko);
+  /* background-color: var(--mango-100); */
+  /* background-color: var(--mango-50); */
 }
 
 ul {

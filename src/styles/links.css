@@ -3,9 +3,9 @@
 /*------------------------------------*/
 
 a {
-  color: var(--mango);
+  color: var(--palm-200);
 }
 
 a:where(:hover, :focus) {
-  color: var(--mango-400);
+  color: var(--palm-300);
 }
