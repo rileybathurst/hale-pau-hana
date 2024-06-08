@@ -160,11 +160,18 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
   <div class="pelican wrap">
     {
       amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
-        <Image
-          src={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.url}`}
-          alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
-          inferSize={true}
-        />
+        <>
+          <Image
+            src={`${awsImages}${image.attributes.name}`}
+            alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
+            inferSize={true}
+          />
+          <Image
+            src={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.url}`}
+            alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
+            inferSize={true}
+          />
+        </>
       ))
     }
   </div>
