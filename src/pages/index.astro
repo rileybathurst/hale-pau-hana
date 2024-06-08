@@ -108,22 +108,19 @@ const amenity = await fetch(`${amenityUrl}?${amenityQuery}`).then((response) =>
   response.json()
 );
 
-// console.log(amenity);
-// console.log(amenity.data.attributes.images);
-
-amenity.data.attributes.images.data.map(
-  (image) =>
-    // image.attributes.url,
-    // console.log('🦄'),
-    console.log(image)
-  // console.log(image.attributes)
-  // console.log(image.attributes.map((imageLayer) => imageLayer.url))
-);
-
 // const postImage = featuredImage.data.attributes.url || null;
 
 interface RateTypes {
   text: string;
+}
+
+interface amenityImageTypes {
+  attributes: {
+    name: string;
+    url: string;
+    width: number;
+    height: number;
+  };
 }
 
 // Im saying yes to trailing slash in the variable but open to debate
@@ -162,7 +159,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
 
   <div class="pelican wrap">
     {
-      amenity.data.attributes.images.data.map((image) => (
+      amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
         <Image
           src={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.url}`}
           alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
