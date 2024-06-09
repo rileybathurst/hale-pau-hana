@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import qs from "qs";
 
 const informationUrl = `${import.meta.env.STRAPI_URL}api/info`;
@@ -11,8 +11,8 @@ const informationQuery = qs.stringify({
   },
 });
 
-const information = await fetch(`${informationUrl}?${informationQuery}`).then((response) =>
-  response.json()
+const information = await fetch(`${informationUrl}?${informationQuery}`).then(
+  (response) => response.json()
 );
 
 interface informationTypes {
@@ -20,24 +20,20 @@ interface informationTypes {
     text: string;
   }[];
 }
-
 ---
 
 <Layout title="">
   <main>
-    <h2>Information</h2>
-  <ul>
-  {information.data.attributes.text[0].children.map((child: informationTypes) => 
-    child.children.map((child) => (
-      <li>
-      {child.text}
-    </li>
-    ))
-  )}
-  </ul>
+    <h2 class="font-hand">Information</h2>
+    <ul>
+      {
+        information.data.attributes.text[0].children.map(
+          (child: informationTypes) =>
+            child.children.map((child) => <li>{child.text}</li>)
+        )
+      }
+    </ul>
   </main>
 </Layout>
 
-<style>
-
-</style>
+<style></style>

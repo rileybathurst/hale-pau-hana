@@ -1,16 +1,16 @@
 ---
-import '../styles/app.css';
+import "../styles/app.css";
 import "@fontsource/pacifico"; // Defaults to weight 400.
 import qs from "qs";
-import SmallMenu from '../components/SmallMenu';
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import SmallMenu from "../components/SmallMenu";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 
 const addressUrl = `${import.meta.env.STRAPI_URL}api/address`;
 const addressQuery = qs.stringify({
@@ -18,25 +18,25 @@ const addressQuery = qs.stringify({
     streetAddress: {
       populate: true,
     },
-    addressLocality : {
+    addressLocality: {
       populate: true,
     },
-    addressRegion : {
+    addressRegion: {
       populate: true,
     },
-    addressCountry : {
+    addressCountry: {
       populate: true,
     },
-    postalCode : {
+    postalCode: {
       populate: true,
     },
-    unit : {
+    unit: {
       populate: true,
     },
-    island : {
+    island: {
       populate: true,
     },
-    building : {
+    building: {
       populate: true,
     },
   },
@@ -55,10 +55,10 @@ const contactQuery = qs.stringify({
     email: {
       populate: true,
     },
-    phone : {
+    phone: {
       populate: true,
     },
-    postal : {
+    postal: {
       populate: true,
     },
   },
@@ -85,67 +85,87 @@ interface ContactPostalTypes {
   text: string;
 }
 
-function FormatPhoneNumber({ phoneNumberString }: { phoneNumberString: number }) {
-  const cleaned = `${phoneNumberString}`.replace(/\D/g, '');
+function FormatPhoneNumber({
+  phoneNumberString,
+}: {
+  phoneNumberString: number;
+}) {
+  const cleaned = `${phoneNumberString}`.replace(/\D/g, "");
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
 
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
   }
 }
-
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-		<ViewTransitions />
-	</head>
-	<>
-		<header>
-			<h1 class="font-hand"><a href="/">{address.data.attributes.building}</a></h1>
-      <h2 class="kilimanjaro">{about.data.attributes.text[0].children.map((child:ContactPostalTypes) => child.text)}</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+  </head>
+  <>
+    <header>
+      <h1 class="font-hand">
+        <a href="/">{address.data.attributes.building}</a>
+      </h1>
+      <h2 class="kilimanjaro">
+        {
+          about.data.attributes.text[0].children.map(
+            (child: ContactPostalTypes) => child.text
+          )
+        }
+      </h2>
 
-<SmallMenu client:load />
+      <SmallMenu client:load />
 
-<nav class="big-boy">
-  <ul>
-    <li><a href="/directions">Directions</a></li>
-    <li><a href="/information">Information</a></li>
-    <li><a href="/see-and-do">Activities</a></li>
-    <li><a href="/departure">Departure</a></li>
-  </ul>
-</nav>
-<address>
-  {address.data.attributes.streetAddress}<br />
-  {address.data.attributes.addressLocality}<br />
-  {address.data.attributes.island} - {address.data.attributes.addressRegion}<br />
-</address>
-		</header>
+      <nav class="big-boy">
+        <ul>
+          <li><a href="/directions">Directions</a></li>
+          <li><a href="/information">Information</a></li>
+          <li><a href="/see-and-do">Activities</a></li>
+          <li><a href="/departure">Departure</a></li>
+        </ul>
+      </nav>
+      <address>
+        {address.data.attributes.streetAddress}<br />
+        {address.data.attributes.addressLocality}<br />
+        {address.data.attributes.island} - {
+          address.data.attributes.addressRegion
+        }<br />
+      </address>
+    </header>
 
-<slot />
+    <slot />
 
-<hr class="condor" />
-	<footer>
-    <p>{contact.data.attributes.name}</p>
-    <p><a href={`mailto:${contact.data.attributes.email}?subject=${address.data.attributes.building}`}>
-      {contact.data.attributes.email}
-    </a></p>
-    <p><a href={`tel:${contact.data.attributes.phone}`}>
-      <FormatPhoneNumber phoneNumberString={contact.data.attributes.phone} />
-    </a></p>
+    <footer>
+      <p>{contact.data.attributes.name}</p>
+      <p>
+        <a
+          href={`mailto:${contact.data.attributes.email}?subject=${address.data.attributes.building}`}
+        >
+          {contact.data.attributes.email}
+        </a>
+      </p>
+      <p>
+        <a href={`tel:${contact.data.attributes.phone}`}>
+          <FormatPhoneNumber
+            phoneNumberString={contact.data.attributes.phone}
+          />
+        </a>
+      </p>
 
-    <BlocksRenderer content={contact.data.attributes.postal} />
+      <BlocksRenderer content={contact.data.attributes.postal} />
 
-    <hr />
-		<p class="text-center">{address.data.attributes.building}</p>
-		<p class="text-center">&copy; {new Date().getFullYear()}</p>
-	</footer>
-	</body>
+      <hr />
+      <p class="text-center">{address.data.attributes.building}</p>
+      <p class="text-center">&copy; {new Date().getFullYear()}</p>
+    </footer>
+  </>
 </html>

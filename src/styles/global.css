@@ -8,11 +8,3 @@ body {
   /* background-color: var(--mango-100); */
   /* background-color: var(--mango-50); */
 }
-
-ul {
-  line-height: 1.5;
-
-  li {
-    margin-block-end: var(--kosciuszko);
-  }
-}

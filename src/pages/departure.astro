@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import qs from "qs";
 
 const departureUrl = `${import.meta.env.STRAPI_URL}api/departure`;
@@ -11,8 +11,8 @@ const departureQuery = qs.stringify({
   },
 });
 
-const departure = await fetch(`${departureUrl}?${departureQuery}`).then((response) =>
-  response.json()
+const departure = await fetch(`${departureUrl}?${departureQuery}`).then(
+  (response) => response.json()
 );
 
 interface ChildrenTypes {
@@ -24,15 +24,13 @@ interface ChildrenTypes {
 
 <Layout title="Rental Rates for Hale Pau Hana #28">
   <main>
-    <h2>Departure</h2>
+    <h2 class="font-hand">Departure</h2>
     <ul>
-      {departure.data.attributes.text[0].children.map((child: ChildrenTypes) => 
-        child.children.map((child) => (
-          <li>
-          {child.text}
-        </li>
-        ))
-      )}
+      {
+        departure.data.attributes.text[0].children.map((child: ChildrenTypes) =>
+          child.children.map((child) => <li>{child.text}</li>)
+        )
+      }
     </ul>
   </main>
 </Layout>

@@ -26,12 +26,16 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+  // console.log(import.meta.env.STRAPI_URL);
+
+  const url = new URL(`${import.meta.env.STRAPI_URL}api/${endpoint}`);
+
+  // console.log(url);
 
   if (query) {
-    Object.entries(query).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(query)) {
       url.searchParams.append(key, value);
-    });
+    }
   }
   const res = await fetch(url.toString());
   let data = await res.json();

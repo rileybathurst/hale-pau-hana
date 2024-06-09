@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import qs from "qs";
 
 const activityUrl = `${import.meta.env.STRAPI_URL}api/activity`;
@@ -11,8 +11,8 @@ const activityQuery = qs.stringify({
   },
 });
 
-const activity = await fetch(`${activityUrl}?${activityQuery}`).then((response) =>
-  response.json()
+const activity = await fetch(`${activityUrl}?${activityQuery}`).then(
+  (response) => response.json()
 );
 
 interface ActivityTypes {
@@ -20,24 +20,19 @@ interface ActivityTypes {
     text: string;
   }[];
 }
-
 ---
 
 <Layout title="Rental Rates for Hale Pau Hana #28">
   <main>
-    <h2>Things to see and do</h2>
-  <ul>
-  {activity.data.attributes.text[0].children.map((child: ActivityTypes) => 
-    child.children.map((child) => (
-      <li>
-      {child.text}
-    </li>
-    ))
-  )}
-  </ul>
+    <h2 class="font-hand">Things to see and do</h2>
+    <ul>
+      {
+        activity.data.attributes.text[0].children.map((child: ActivityTypes) =>
+          child.children.map((child) => <li>{child.text}</li>)
+        )
+      }
+    </ul>
   </main>
 </Layout>
 
-<style>
-
-</style>
+<style></style>

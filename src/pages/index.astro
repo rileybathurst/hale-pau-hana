@@ -172,17 +172,13 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
         <div>
           <Image
             src={`${awsImages}${image.attributes.name}`}
+            class="poster"
             alt={
               `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
-              "apaartment image"
+              "apartment image"
             }
             inferSize={true}
           />
-          {/* <Image
-            src={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.url}`}
-            alt={`${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.name}`}
-            inferSize={true}
-          /> */}
         </div>
       ))
     }
@@ -200,6 +196,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
       <Image
         src={`${awsImages}hale-pau-hana00008.jpeg`}
         alt="the apartment above the beach."
+        class="poster"
         inferSize={true}
       />
     </div>
@@ -207,6 +204,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
       <Image
         src={`${awsImages}hale-pau-hana00003.jpeg`}
         alt="the apartment above the beach."
+        class="poster"
         inferSize={true}
       />
     </div>

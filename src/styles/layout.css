@@ -79,6 +79,20 @@ footer {
 
 /*------------------------------------*/
 
+.pelican.gridder {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 1rem;
+}
+
+/*------------------------------------*/
+
 address {
   padding: var(--vinson);
+  margin-block-end: var(--vinson);
+}
+
+footer {
+  padding-block: var(--vinson);
 }

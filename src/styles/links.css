@@ -8,4 +8,18 @@ a {
 
 a:where(:hover, :focus) {
   color: var(--palm-300);
+  text-decoration: none;
+}
+
+/*------------------------------------*/
+
+.big-boy ul li a {
+  padding: var(--kosciuszko);
+  border-radius: var(--card-radius);
+  transition: var(--fade);
+}
+
+.big-boy ul li a:hover {
+  background-color: var(--palm-100);
+  background-color: var(--kingly-cloud);
 }

@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+import qs from "qs";
+import { Image } from "astro:assets";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import ApartmentLayout from "../images/ApartmentLayout.astro";
+
+const amenityUrl = `${import.meta.env.STRAPI_URL}api/amenitie`;
+const amenityQuery = qs.stringify({
+  populate: {
+    text: {
+      populate: true,
+    },
+    images: {
+      populate: true,
+    },
+  },
+});
+
+const amenity = await fetch(`${amenityUrl}?${amenityQuery}`).then((response) =>
+  response.json()
+);
+
+interface amenityImageTypes {
+  attributes: {
+    name: string;
+    url: string;
+    width: number;
+    height: number;
+    alternativeText?: string;
+  };
+}
+
+// Im saying yes to trailing slash in the variable but open to debate
+const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
+---
+
+<Layout title="Ammenities">
+  <section>
+    <h2 class="font-hand">Amenities</h2>
+  </section>
+  <main class="pelican wrap">
+    {
+      amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
+        <div>
+          <Image
+            src={`${awsImages}${image.attributes.name}`}
+            class="poster"
+            alt={
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              "apartment image"
+            }
+            inferSize={true}
+          />
+        </div>
+      ))
+    }
+  </main>
+  <div class="pelican">
+    <ApartmentLayout />
+  </div>
+  <section>
+    <BlocksRenderer content={amenity.data.attributes.text} />
+  </section>
+</Layout>

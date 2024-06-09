@@ -2,7 +2,8 @@
 /* #COLOR */
 /*------------------------------------*/
 
-address {
+address,
+footer {
   background: whitesmoke;
   box-shadow: 0 0 0 100vmax whitesmoke;
   clip-path: inset(0 -100vmax);
