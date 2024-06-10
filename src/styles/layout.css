@@ -61,10 +61,8 @@ footer {
 }
 
 .pelican.wrap > * {
-  /* flex: 1 1 */
-  /* calc(var(--pelican) / 2 - clamp(var(--kosciuszko), 1.667vw, var(--denali))); */
-  /* flex: 1 1 calc(var(--pelican) / 2 - 4rem); */
-  flex: 1 1 10rem;
+  flex: 1 1
+    calc(var(--pelican) / 2 - clamp(var(--kosciuszko), 1.667vw, var(--denali)));
   max-width: none;
   margin-inline: 0;
   padding-inline: 0;

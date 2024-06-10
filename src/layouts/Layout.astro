@@ -97,6 +97,8 @@ function FormatPhoneNumber({
     return `(${match[1]}) ${match[2]}-${match[3]}`;
   }
 }
+
+console.log(about.data.attributes.text);
 ---
 
 <!doctype html>
@@ -116,11 +118,7 @@ function FormatPhoneNumber({
         <a href="/">{address.data.attributes.building}</a>
       </h1>
       <h2 class="kilimanjaro">
-        {
-          about.data.attributes.text[0].children.map(
-            (child: ContactPostalTypes) => child.text
-          )
-        }
+        <BlocksRenderer content={about.data.attributes.text} />
       </h2>
 
       <SmallMenu client:load />
