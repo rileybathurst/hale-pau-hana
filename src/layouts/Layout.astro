@@ -1,107 +1,16 @@
 ---
 import "../styles/app.css";
 import "@fontsource/pacifico"; // Defaults to weight 400.
-import qs from "qs";
-import SmallMenu from "../components/SmallMenu";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 interface Props {
   title: string;
 }
-
 const { title } = Astro.props;
 import { ViewTransitions } from "astro:transitions";
-
-const addressUrl = `${import.meta.env.STRAPI_URL}api/address`;
-const addressQuery = qs.stringify({
-  populate: {
-    streetAddress: {
-      populate: true,
-    },
-    addressLocality: {
-      populate: true,
-    },
-    addressRegion: {
-      populate: true,
-    },
-    addressCountry: {
-      populate: true,
-    },
-    postalCode: {
-      populate: true,
-    },
-    unit: {
-      populate: true,
-    },
-    island: {
-      populate: true,
-    },
-    building: {
-      populate: true,
-    },
-  },
-});
-
-const address = await fetch(`${addressUrl}?${addressQuery}`).then((response) =>
-  response.json()
-);
-
-const contactUrl = `${import.meta.env.STRAPI_URL}api/contact`;
-const contactQuery = qs.stringify({
-  populate: {
-    name: {
-      populate: true,
-    },
-    email: {
-      populate: true,
-    },
-    phone: {
-      populate: true,
-    },
-    postal: {
-      populate: true,
-    },
-  },
-});
-
-const contact = await fetch(`${contactUrl}?${contactQuery}`).then((response) =>
-  response.json()
-);
-
-const aboutUrl = `${import.meta.env.STRAPI_URL}api/about`;
-const aboutQuery = qs.stringify({
-  populate: {
-    text: {
-      populate: true,
-    },
-  },
-});
-
-const about = await fetch(`${aboutUrl}?${aboutQuery}`).then((response) =>
-  response.json()
-);
-
-interface ContactPostalTypes {
-  text: string;
-}
-
-function FormatPhoneNumber({
-  phoneNumberString,
-}: {
-  phoneNumberString: number;
-}) {
-  const cleaned = `${phoneNumberString}`.replace(/\D/g, "");
-  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-  if (match) {
-    return `(${match[1]}) ${match[2]}-${match[3]}`;
-  }
-}
-
-console.log(about.data.attributes.text);
+import Header from "../layouts/header.astro";
+import Footer from "../layouts/footer.astro";
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
     <!-- TODO: SEO -->
@@ -110,72 +19,14 @@ console.log(about.data.attributes.text);
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>{title} | Hale Pau Hana</title>
     <ViewTransitions />
   </head>
   <>
-    <header>
-      <h1 class="font-hand text-center">
-        <a href="/" class="link-subtle">
-          {address.data.attributes.building}
-        </a>
-      </h1>
-      <div class="kilimanjaro-p text-center">
-        <BlocksRenderer content={about.data.attributes.text} />
-      </div>
-
-      <SmallMenu client:load />
-
-      <nav class="big-boy">
-        <ul>
-          <li><a href="/directions">Directions</a></li>
-          <li><a href="/information">Information</a></li>
-          <li><a href="/see-and-do">Activities</a></li>
-          <li><a href="/departure">Departure</a></li>
-        </ul>
-      </nav>
-      <address class="elbrus text-center">
-        <a
-          href={address.data.attributes.googleMapLink}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {address.data.attributes.streetAddress}
-          <br />
-          {address.data.attributes.addressLocality},
-          {address.data.attributes.island} - {
-            address.data.attributes.addressRegion == "HI"
-              ? "Hawaii"
-              : address.data.attributes.addressRegion
-          }
-        </a>
-      </address>
-    </header>
+    <Header />
 
     <slot />
 
-    <footer>
-      <p>{contact.data.attributes.name}</p>
-      <p>
-        <a
-          href={`mailto:${contact.data.attributes.email}?subject=${address.data.attributes.building}`}
-        >
-          {contact.data.attributes.email}
-        </a>
-      </p>
-      <p>
-        <a href={`tel:${contact.data.attributes.phone}`}>
-          <FormatPhoneNumber
-            phoneNumberString={contact.data.attributes.phone}
-          />
-        </a>
-      </p>
-
-      <BlocksRenderer content={contact.data.attributes.postal} />
-
-      <hr />
-      <p class="text-center">{address.data.attributes.building}</p>
-      <p class="text-center">&copy; {new Date().getFullYear()}</p>
-    </footer>
+    <Footer />
   </>
 </html>

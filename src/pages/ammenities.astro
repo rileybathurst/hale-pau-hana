@@ -1,6 +1,6 @@
 ---
 import fetchApi from "../lib/strapi";
-import type AmenitieTypes from "../interfaces/amenitie-types";
+import type TextImageTypes from "../interfaces/text-images-types";
 
 import { Image } from "astro:assets";
 import type StrapiImagesTypes from "../interfaces/strapi-images-types";
@@ -9,7 +9,7 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Layout from "../layouts/Layout.astro";
 import ApartmentLayout from "../images/ApartmentLayout.astro";
 
-const amenitie = await fetchApi<AmenitieTypes>({
+const amenitie = await fetchApi<TextImageTypes>({
   endpoint: "amenitie",
   wrappedByKey: "data",
   populate: {
@@ -21,10 +21,6 @@ const amenitie = await fetchApi<AmenitieTypes>({
     },
   },
 });
-
-// * can this still work with the fethAPI
-// Im saying yes to trailing slash in the variable but open to debate
-const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
 ---
 
 <Layout title="Ammenities">
@@ -32,11 +28,12 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
     <h2 class="font-hand">Amenities</h2>
   </section>
   <main class="pelican wrap">
+    <!-- TODO: fix the alt -->
     {
       amenitie.attributes.images.data.map((image: StrapiImagesTypes) => (
         <div>
           <Image
-            src={`${awsImages}${image.attributes.name}`}
+            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
             class="poster"
             alt={
               `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||

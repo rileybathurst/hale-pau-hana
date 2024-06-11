@@ -1,27 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import qs from "qs";
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import fetchApi from "../lib/strapi";
+import Layout from "../layouts/Layout.astro";
+import type TextTypes from "../interfaces/text-types";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-const directionUrl = `${import.meta.env.STRAPI_URL}api/direction`;
-const directionQuery = qs.stringify({
+const direction = await fetchApi<TextTypes>({
+  endpoint: "direction",
+  wrappedByKey: "data",
   populate: {
     text: {
       populate: true,
     },
   },
 });
-
-const direction = await fetch(`${directionUrl}?${directionQuery}`).then((response) =>
-  response.json()
-);
-
 ---
 
 <Layout title="Directions">
   <main>
     <h2 class="font-hand">Directions</h2>
-    <h3 class="">Kahului Airport to  Hale Pau Hana</h3>
-    <BlocksRenderer content={direction.data.attributes.text} />
+    <h3 class="">Kahului Airport to Hale Pau Hana</h3>
+    <BlocksRenderer content={direction.attributes.text} />
   </main>
 </Layout>

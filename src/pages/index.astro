@@ -4,32 +4,32 @@
 // currently running aws images to get up and running quickly // this doesnt include the alt text
 
 import Layout from "../layouts/Layout.astro";
-import qs from "qs";
+import fetchApi from "../lib/strapi";
 import { Image } from "astro:assets";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import ApartmentLayout from "../images/ApartmentLayout.astro";
+// import type TextTypes from "../interfaces/text-types";
+import type AddressTypes from "../interfaces/address-types";
+import type RateTypes from "../interfaces/rate-types";
+import type AboutTypes from "../interfaces/about-types";
+import type TextImageTypes from "../interfaces/text-images-types";
 
-const activityUrl = `${import.meta.env.STRAPI_URL}api/activity`;
-const activityQuery = qs.stringify({
+const activity = await fetchApi<TextImageTypes>({
+  endpoint: "activity",
+  wrappedByKey: "data",
   populate: {
     text: {
+      populate: true,
+    },
+    images: {
       populate: true,
     },
   },
 });
 
-const activity = await fetch(`${activityUrl}?${activityQuery}`).then(
-  (response) => response.json()
-);
-
-interface ActivityTypes {
-  children: {
-    text: string;
-  }[];
-}
-
-const addressUrl = `${import.meta.env.STRAPI_URL}api/address`;
-const addressQuery = qs.stringify({
+const address = await fetchApi<AddressTypes>({
+  endpoint: "address",
+  wrappedByKey: "data",
   populate: {
     streetAddress: {
       populate: true,
@@ -61,21 +61,12 @@ const addressQuery = qs.stringify({
   },
 });
 
-const address = await fetch(`${addressUrl}?${addressQuery}`).then((response) =>
-  response.json()
-);
-
-const ratesUrl = `${import.meta.env.STRAPI_URL}api/rate`;
-const ratesQuery = qs.stringify({
+const rate = await fetchApi<RateTypes>({
+  endpoint: "rate",
+  wrappedByKey: "data",
   populate: {
     taxId: { populate: true },
     vrbo: {
-      populate: true,
-    },
-    checkin: {
-      populate: true,
-    },
-    checkout: {
       populate: true,
     },
     children: {
@@ -90,69 +81,48 @@ const ratesQuery = qs.stringify({
   },
 });
 
-const rate = await fetch(`${ratesUrl}?${ratesQuery}`).then((response) =>
-  response.json()
-);
-
-const amenityUrl = `${import.meta.env.STRAPI_URL}api/amenitie`;
-const amenityQuery = qs.stringify({
+const amenitie = await fetchApi<TextImageTypes>({
+  endpoint: "amenitie",
+  wrappedByKey: "data",
   populate: {
     text: {
       populate: true,
     },
     images: {
       populate: true,
-      // fields: ["name", "width", "height", "url", "alternativeText"],
     },
   },
 });
 
-const amenity = await fetch(`${amenityUrl}?${amenityQuery}`).then((response) =>
-  response.json()
-);
-
-// console.log(amenity.data.attributes.map((image: amenityImageTypes) => image));
-
-// const postImage = featuredImage.data.attributes.url || null;
-
-interface RateTypes {
-  text: string;
-}
-
-interface amenityImageTypes {
-  attributes: {
-    name: string;
-    url: string;
-    width: number;
-    height: number;
-    alternativeText?: string;
-  };
-}
-
-// Im saying yes to trailing slash in the variable but open to debate
-const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
+const about = await fetchApi<AboutTypes>({
+  endpoint: "about",
+  wrappedByKey: "data",
+  populate: {
+    images: {
+      populate: true,
+    },
+  },
+});
 ---
 
-<Layout title={`Welcome to ${address.data.attributes.building}`} `>
+<Layout title="Welcome">
   <div class="pelican wrap">
-    <!-- astro images need this on the flex in safari but it breaks the auto height -->
-    <!-- TODO: test on grid not flex -->
-    <div>
-      <Image
-        src={`${awsImages}hale-pau-hana00005.jpeg`}
-        alt="the apartment above the beach."
-        class="poster"
-        inferSize={true}
-      />
-    </div>
-    <div>
-      <Image
-        src={`${awsImages}hale-pau-hana00004.jpeg`}
-        alt="sunset on the beach."
-        class="poster"
-        inferSize={true}
-      />
-    </div>
+    {
+      about.attributes.images.data.map((image) => (
+        <div>
+          {/* astro images need this on the flex in safari but it breaks the auto height */}
+          <Image
+            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+            class="poster"
+            alt={
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              "apartment image"
+            }
+            inferSize={true}
+          />
+        </div>
+      ))
+    }
   </div>
   <main>
     <h2 class="font-hand">Rates</h2>
@@ -161,20 +131,20 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
       or call
     </p>
 
-    <BlocksRenderer content={rate.data.attributes.direct} />
-    <BlocksRenderer content={rate.data.attributes.children} />
-    <BlocksRenderer content={rate.data.attributes.cleaning} />
-    <p>VRBO - {rate.data.attributes.vrbo}</p>
+    <BlocksRenderer content={rate.attributes.direct} />
+    <BlocksRenderer content={rate.attributes.children} />
+    <BlocksRenderer content={rate.attributes.cleaning} />
+    <p>VRBO - {rate.attributes.vrbo}</p>
 
-    <p>Hawaii Hotel & excise Tax is % additional</p>
+    <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
   </main>
 
   <div class="pelican wrap">
     {
-      amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
+      amenitie.attributes.images.data.map((image) => (
         <div>
           <Image
-            src={`${awsImages}${image.attributes.name}`}
+            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
             class="poster"
             alt={
               `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
@@ -191,29 +161,28 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
   </div>
   <section>
     <h2 class="font-hand">Amenities</h2>
-    <BlocksRenderer content={amenity.data.attributes.text} />
+    <BlocksRenderer content={amenitie.attributes.text} />
   </section>
 
   <div class="pelican wrap">
-    <div>
-      <Image
-        src={`${awsImages}hale-pau-hana00008.jpeg`}
-        alt="the apartment above the beach."
-        class="poster"
-        inferSize={true}
-      />
-    </div>
-    <div>
-      <Image
-        src={`${awsImages}hale-pau-hana00003.jpeg`}
-        alt="the apartment above the beach."
-        class="poster"
-        inferSize={true}
-      />
-    </div>
+    {
+      activity.attributes.images.data.slice(0, 2).map((image) => (
+        <div>
+          <Image
+            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+            class="poster"
+            alt={
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              "apartment image"
+            }
+            inferSize={true}
+          />
+        </div>
+      ))
+    }
   </div>
   <section>
     <h2 class="font-hand">Things to see and do</h2>
-    <BlocksRenderer content={activity.data.attributes.text} />
+    <BlocksRenderer content={activity.attributes.text} />
   </section>
 </Layout>

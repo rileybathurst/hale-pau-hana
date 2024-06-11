@@ -1,9 +1,13 @@
 ---
+import fetchApi from "../lib/strapi";
 import Layout from "../layouts/Layout.astro";
-import qs from "qs";
+import type TextTypes from "../interfaces/text-types";
+import type RateTypes from "../interfaces/rate-types";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-const informationUrl = `${import.meta.env.STRAPI_URL}api/info`;
-const informationQuery = qs.stringify({
+const information = await fetchApi<TextTypes>({
+  endpoint: "info",
+  wrappedByKey: "data",
   populate: {
     text: {
       populate: true,
@@ -11,29 +15,46 @@ const informationQuery = qs.stringify({
   },
 });
 
-const information = await fetch(`${informationUrl}?${informationQuery}`).then(
-  (response) => response.json()
-);
+const rate = await fetchApi<RateTypes>({
+  endpoint: "rate",
+  wrappedByKey: "data",
+  populate: {
+    taxId: { populate: true },
+    vrbo: {
+      populate: true,
+    },
+    children: {
+      populate: true,
+    },
+    cleaning: {
+      populate: true,
+    },
+    direct: {
+      populate: true,
+    },
+    taxRate: {
+      populate: true,
+    },
+  },
+});
 
-interface informationTypes {
-  children: {
-    text: string;
-  }[];
-}
+// console.log(information);
 ---
 
-<Layout title="">
+<Layout title="Information">
   <main>
     <h2 class="font-hand">Information</h2>
-    <ul>
-      {
-        information.data.attributes.text[0].children.map(
-          (child: informationTypes) =>
-            child.children.map((child) => <li>{child.text}</li>)
-        )
-      }
-    </ul>
+    <BlocksRenderer content={information.attributes.text} />
+
+    <hr />
+
+    <h2 class="font-hand">Rates</h2>
+
+    <BlocksRenderer content={rate.attributes.direct} />
+    <BlocksRenderer content={rate.attributes.children} />
+    <BlocksRenderer content={rate.attributes.cleaning} />
+    <p>VRBO - {rate.attributes.vrbo}</p>
+
+    <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
   </main>
 </Layout>
-
-<style></style>

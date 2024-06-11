@@ -1,4 +1,3 @@
-// import { boolean } from "astro/zod";
 import qs from "qs";
 
 interface Props {
@@ -6,14 +5,12 @@ interface Props {
   query?: Record<string, string>;
   wrappedByKey?: string;
   wrappedByList?: boolean;
-  // oh no this needs a generic?
   // https://docs.strapi.io/dev-docs/api/query-engine/populating
-  // populate?: Array[] | null;
   populate?: {
     [key: string]: {
       populate: boolean;
     };
-  } | null;
+  };
 }
 
 /**
@@ -25,8 +22,6 @@ interface Props {
  * @param populate - The fields to populate
  * @returns
  */
-
-// console.log(import.meta.env.STRAPI_URL);
 
 export default async function fetchApi<T>({
   endpoint,

@@ -1,0 +1,89 @@
+---
+import fetchApi from "../lib/strapi";
+import SmallMenu from "../components/SmallMenu";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import type TextTypes from "../interfaces/text-types";
+import type AddressTypes from "../interfaces/address-types";
+
+const about = await fetchApi<TextTypes>({
+  endpoint: "about",
+  wrappedByKey: "data",
+  populate: {
+    text: {
+      populate: true,
+    },
+  },
+});
+
+const address = await fetchApi<AddressTypes>({
+  endpoint: "address",
+  wrappedByKey: "data",
+  populate: {
+    streetAddress: {
+      populate: true,
+    },
+    addressLocality: {
+      populate: true,
+    },
+    addressRegion: {
+      populate: true,
+    },
+    addressCountry: {
+      populate: true,
+    },
+    postalCode: {
+      populate: true,
+    },
+    unit: {
+      populate: true,
+    },
+    island: {
+      populate: true,
+    },
+    building: {
+      populate: true,
+    },
+    googleMapLink: {
+      populate: true,
+    },
+  },
+});
+---
+
+<header class="header">
+  <h1 class="font-hand text-center">
+    <a href="/" class="link-subtle">
+      {address.attributes.building}
+    </a>
+  </h1>
+  <div class="kilimanjaro-p text-center">
+    <BlocksRenderer content={about.attributes.text} />
+  </div>
+
+  <SmallMenu client:load />
+
+  <nav class="big-boy">
+    <ul>
+      <li><a href="/directions">Directions</a></li>
+      <li><a href="/information">Information</a></li>
+      <li><a href="/see-and-do">Activities</a></li>
+      <li><a href="/departure">Departure</a></li>
+    </ul>
+  </nav>
+  <address class="elbrus text-center">
+    <a
+      href={address.attributes.googleMapLink}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {address.attributes.streetAddress}
+      <br />
+      {address.attributes.addressLocality},
+      {address.attributes.island} - {
+        address.attributes.addressRegion == "HI"
+          ? "Hawaii"
+          : address.attributes.addressRegion
+      }
+    </a>
+  </address>
+</header>
