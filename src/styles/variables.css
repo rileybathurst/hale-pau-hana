@@ -1,40 +1,17 @@
 :root {
-  /* TODO: -100, -200 etc */
-  --palm: #60a06e;
-  --mango: #faab3f;
-
-  @media (color-gamut: p3) {
-    @supports (color: oklch(0% 0 0)) {
-      --palm: oklch(65% 0.1 150);
-      --mango: oklch(80% 0.15 70);
-    }
-  }
-
-  /* TODO: check for p3 support */
-  --palm-100: oklch(65% 0.1 150); /* default */
-  --palm-200: oklch(50% 0.1 150);
-  --palm-300: oklch(45% 0.1 150);
-  --palm-400: oklch(30% 0.1 150);
-
-  --mango-50: oklch(98.82% 0.027 90);
-  --mango-100: oklch(95% 0.075 90); /* ! P3 only */
-  --mango-200: oklch(90% 0.125 80);
-  --mango-300: oklch(80% 0.15 70); /* default */
-  --mango-400: oklch(75% 0.2 70);
-
   /*------------------------------------*/
   /* #NEUTRALS */
   /*------------------------------------*/
 
-  --black-metal: hsl(0, 0%, 2.5%);
-  --black-out: hsl(0, 0%, 12.5%);
-  --raven-black: hsl(0, 0%, 25%);
-  --industrial-revolution: hsl(0, 0%, 37.5%);
+  --black-metal: hsl(0 0% 2.5%);
+  --black-out: hsl(0 0% 12.5%);
+  --raven-black: hsl(0 0% 25%);
+  --industrial-revolution: hsl(0 0% 37.5%);
   /* grey */
-  --cold-grey: hsl(0, 0%, 62.5%);
-  --tin-soldier: hsl(0, 0%, 75%);
-  --kingly-cloud: hsl(0, 0%, 87.5%);
-  --brilliance: hsl(0, 0%, 97.5%);
+  --cold-grey: hsl(0 0% 62.5%);
+  --tin-soldier: hsl(0 0% 75%);
+  --kingly-cloud: hsl(0 0% 87.5%);
+  --brilliance: hsl(0 0% 97.5%);
 
   /*------------------------------------*/
   /* #TYPOGRAPHY */
@@ -101,4 +78,26 @@
   --fade: 0.2s var(--easing);
 
   --card-radius: 0.25rem;
+
+  --palm: #60a06e;
+  --mango: #faab3f;
+
+  @media (color-gamut: p3) {
+    @supports (color: oklch 0% 0 0) {
+      --palm: oklch(65% 0.1 150);
+      --mango: oklch(80% 0.15 70);
+    }
+  }
+
+  /* TODO: check for p3 support */
+  --palm-100: oklch(65% 0.1 150); /* default */
+  --palm-200: oklch(50% 0.1 150);
+  --palm-300: oklch(45% 0.1 150);
+  --palm-400: oklch(30% 0.1 150);
+
+  --mango-50: oklch(98.82% 0.027 90);
+  --mango-100: oklch(95% 0.075 90); /* ! P3 only */
+  --mango-200: oklch(90% 0.125 80);
+  --mango-300: oklch(80% 0.15 70); /* default */
+  --mango-400: oklch(75% 0.2 70);
 }

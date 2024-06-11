@@ -2,9 +2,32 @@
 /* #COLOR */
 /*------------------------------------*/
 
+body {
+  background-color: var(--brilliance);
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--black-metal);
+    color: var(--brilliance);
+  }
+}
+
 address,
 footer {
-  background: whitesmoke;
+  background-color: whitesmoke;
   box-shadow: 0 0 0 100vmax whitesmoke;
   clip-path: inset(0 -100vmax);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-out);
+    box-shadow: 0 0 0 100vmax var(--black-out);
+  }
+}
+
+hr {
+  border-color: var(--mango);
+
+  @media (prefers-color-scheme: dark) {
+    border-color: var(--palm);
+  }
 }

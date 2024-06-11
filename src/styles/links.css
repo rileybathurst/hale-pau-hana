@@ -4,11 +4,19 @@
 
 a {
   color: var(--palm-200);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--mango);
+  }
 }
 
 a:where(:hover, :focus) {
-  color: var(--palm-300);
   text-decoration: none;
+  color: var(--palm-300);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--mango-200);
+  }
 }
 
 .link-subtle {
@@ -28,6 +36,10 @@ a:where(:hover, :focus) {
 }
 
 .big-boy ul li a:hover {
-  background-color: var(--palm-100);
   background-color: var(--kingly-cloud);
+  background-color: var(--palm-100);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-out);
+  }
 }

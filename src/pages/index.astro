@@ -125,6 +125,7 @@ const about = await fetchApi<AboutTypes>({
     }
   </div>
   <main>
+    <hr />
     <h2 class="font-hand">Rates</h2>
     <p>
       If you want to reserve a date or have comments or questions, please email
@@ -160,6 +161,7 @@ const about = await fetchApi<AboutTypes>({
     <ApartmentLayout />
   </div>
   <section>
+    <hr />
     <h2 class="font-hand">Amenities</h2>
     <BlocksRenderer content={amenitie.attributes.text} />
   </section>
@@ -182,6 +184,7 @@ const about = await fetchApi<AboutTypes>({
     }
   </div>
   <section>
+    <hr />
     <h2 class="font-hand">Things to see and do</h2>
     <BlocksRenderer content={activity.attributes.text} />
   </section>
