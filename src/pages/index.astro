@@ -55,6 +55,9 @@ const addressQuery = qs.stringify({
     building: {
       populate: true,
     },
+    googleMapLink: {
+      populate: true,
+    },
   },
 });
 
@@ -187,7 +190,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
     <ApartmentLayout />
   </div>
   <section>
-    <h2>Amenities</h2>
+    <h2 class="font-hand">Amenities</h2>
     <BlocksRenderer content={amenity.data.attributes.text} />
   </section>
 
@@ -210,7 +213,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
     </div>
   </div>
   <section>
-    <h2>Things to see and do</h2>
+    <h2 class="font-hand">Things to see and do</h2>
     <BlocksRenderer content={activity.data.attributes.text} />
   </section>
 </Layout>

@@ -11,6 +11,14 @@ a:where(:hover, :focus) {
   text-decoration: none;
 }
 
+.link-subtle {
+  text-decoration: none;
+}
+
+.link-subtle:where(:hover, :focus) {
+  text-decoration: underline;
+}
+
 /*------------------------------------*/
 
 .big-boy ul li a {

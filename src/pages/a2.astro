@@ -1,17 +1,12 @@
 ---
-import fetchApi from "../lib/strapi";
-import type AmenitieTypes from "../interfaces/amenitie-types";
-
-import { Image } from "astro:assets";
-import type StrapiImagesTypes from "../interfaces/strapi-images-types";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-
 import Layout from "../layouts/Layout.astro";
+import qs from "qs";
+import { Image } from "astro:assets";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import ApartmentLayout from "../images/ApartmentLayout.astro";
 
-const amenitie = await fetchApi<AmenitieTypes>({
-  endpoint: "amenitie",
-  wrappedByKey: "data",
+const amenityUrl = `${import.meta.env.STRAPI_URL}api/amenitie`;
+const amenityQuery = qs.stringify({
   populate: {
     text: {
       populate: true,
@@ -22,7 +17,22 @@ const amenitie = await fetchApi<AmenitieTypes>({
   },
 });
 
-// * can this still work with the fethAPI
+console.log(`${amenityUrl}?${amenityQuery}`);
+
+const amenity = await fetch(`${amenityUrl}?${amenityQuery}`).then((response) =>
+  response.json()
+);
+
+interface amenityImageTypes {
+  attributes: {
+    name: string;
+    url: string;
+    width: number;
+    height: number;
+    alternativeText?: string;
+  };
+}
+
 // Im saying yes to trailing slash in the variable but open to debate
 const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
 ---
@@ -33,7 +43,7 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
   </section>
   <main class="pelican wrap">
     {
-      amenitie.attributes.images.data.map((image: StrapiImagesTypes) => (
+      amenity.data.attributes.images.data.map((image: amenityImageTypes) => (
         <div>
           <Image
             src={`${awsImages}${image.attributes.name}`}
@@ -52,6 +62,6 @@ const awsImages = "https://hale-pau-hana.s3.us-west-1.amazonaws.com/";
     <ApartmentLayout />
   </div>
   <section>
-    <BlocksRenderer content={amenitie.attributes.text} />
+    <BlocksRenderer content={amenity.data.attributes.text} />
   </section>
 </Layout>

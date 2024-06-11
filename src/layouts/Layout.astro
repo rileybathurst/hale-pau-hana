@@ -104,6 +104,7 @@ console.log(about.data.attributes.text);
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- TODO: SEO -->
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
     <meta name="viewport" content="width=device-width" />
@@ -114,12 +115,14 @@ console.log(about.data.attributes.text);
   </head>
   <>
     <header>
-      <h1 class="font-hand">
-        <a href="/">{address.data.attributes.building}</a>
+      <h1 class="font-hand text-center">
+        <a href="/" class="link-subtle">
+          {address.data.attributes.building}
+        </a>
       </h1>
-      <h2 class="kilimanjaro">
+      <div class="kilimanjaro-p text-center">
         <BlocksRenderer content={about.data.attributes.text} />
-      </h2>
+      </div>
 
       <SmallMenu client:load />
 
@@ -131,12 +134,21 @@ console.log(about.data.attributes.text);
           <li><a href="/departure">Departure</a></li>
         </ul>
       </nav>
-      <address>
-        {address.data.attributes.streetAddress}<br />
-        {address.data.attributes.addressLocality}<br />
-        {address.data.attributes.island} - {
-          address.data.attributes.addressRegion
-        }<br />
+      <address class="elbrus text-center">
+        <a
+          href={address.data.attributes.googleMapLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {address.data.attributes.streetAddress}
+          <br />
+          {address.data.attributes.addressLocality},
+          {address.data.attributes.island} - {
+            address.data.attributes.addressRegion == "HI"
+              ? "Hawaii"
+              : address.data.attributes.addressRegion
+          }
+        </a>
       </address>
     </header>
 

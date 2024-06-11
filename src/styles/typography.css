@@ -18,7 +18,8 @@ h3,
 }
 
 h4,
-.kilimanjaro {
+.kilimanjaro,
+.kilimanjaro-p p {
   font-size: var(--kilimanjaro);
 }
 
