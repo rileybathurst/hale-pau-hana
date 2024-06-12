@@ -34,17 +34,13 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const queryPopulatedBracketed = qs
-    .stringify({ populate })
-    .replace(/%5B/g, "[")
-    .replace(/%5D/g, "]");
-
   const url = new URL(
-    `${import.meta.env.STRAPI_URL}api/${endpoint}${populate ? `?${queryPopulatedBracketed}` : ""}`
+    `${import.meta.env.STRAPI_URL}api/${endpoint}${populate ? `?${qs.stringify({ populate })}` : ""}`
   );
 
   // with populate and no ggraphiql checking the structure on the api helps
   // console.log(url);
+  console.log(url.href);
 
   if (query) {
     for (const [key, value] of Object.entries(query)) {

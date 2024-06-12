@@ -28,7 +28,8 @@ const activity = await fetchApi<TextImageTypes>({
             src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
             class="poster"
             alt={
-              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              `${image.attributes.alternativeText}` ||
+              `${import.meta.env.AWS_IMAGES}${image.attributes.name}` ||
               "apartment image"
             }
             inferSize={true}

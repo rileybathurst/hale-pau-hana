@@ -41,10 +41,7 @@ export default function SmallMenu() {
           onClick={() => setSlide('open')}
           type='button'
         >
-          <span>
-            OPEN<br />
-            MENU
-          </span>
+          MENU
         </button>
         <nav
           style={{
@@ -77,10 +74,7 @@ export default function SmallMenu() {
           onClick={() => setSlide('closed')}
           type="button"
         >
-          <span>
-            CLOSE<br />
-            MENU
-          </span>
+          CLOSE
         </button>
         <nav
           style={{
@@ -117,10 +111,7 @@ export default function SmallMenu() {
           type="button"
           onClick={() => setSlide('open')}
         >
-          <span>
-            OPEN<br />
-            MENU
-          </span>
+          MENU
         </button>
         <nav
           style={{

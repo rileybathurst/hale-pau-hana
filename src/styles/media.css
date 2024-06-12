@@ -8,6 +8,9 @@ img {
 }
 
 svg {
+  fill: var(--black-metal); /* text */
+  stroke: var(--black-metal); /* borders */
+
   @media (prefers-color-scheme: dark) {
     fill: var(--brilliance); /* text */
     stroke: var(--brilliance); /* borders */

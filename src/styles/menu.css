@@ -4,6 +4,7 @@
 
 .small-menu {
   z-index: var(--emergent);
+  position: relative; /* needed for the z-index */
   @media (min-width: 30rem) {
     display: none;
   }
@@ -47,6 +48,8 @@
 
   li {
     text-align: center;
+    padding-block: var(--kosciuszko);
+    margin: 0;
   }
 }
 
