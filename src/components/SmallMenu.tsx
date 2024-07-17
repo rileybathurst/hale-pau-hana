@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import MenuList from './MenuList';
 
-
 export default function SmallMenu() {
 
   const [slide, setSlide] = useState('firstload');
@@ -12,11 +11,11 @@ export default function SmallMenu() {
   // const ref = useRef();
   const ref = useRef<HTMLElement | null>(null);
 
-  interface currentTypes {
-    current: {
-      clientHeight: number;
-    };
-  }
+  /* interface currentTypes {
+      current: {
+        clientHeight: number;
+      };
+    } */
 
   useEffect(() => {
     ref.current ? setAmount(ref.current.clientHeight) : null;

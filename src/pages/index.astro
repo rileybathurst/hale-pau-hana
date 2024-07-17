@@ -27,7 +27,7 @@ const activity = await fetchApi<TextImageTypes>({
   },
 });
 
-const address = await fetchApi<AddressTypes>({
+/* const address = await fetchApi<AddressTypes>({
   endpoint: "address",
   wrappedByKey: "data",
   populate: {
@@ -59,7 +59,7 @@ const address = await fetchApi<AddressTypes>({
       populate: true,
     },
   },
-});
+}); */
 
 const rate = await fetchApi<RateTypes>({
   endpoint: "rate",

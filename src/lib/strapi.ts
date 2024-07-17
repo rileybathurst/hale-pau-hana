@@ -1,6 +1,6 @@
 import qs from "qs";
 
-interface Props {
+interface fetchApiTypes {
   endpoint: string;
   query?: Record<string, string>;
   wrappedByKey?: string;
@@ -29,7 +29,7 @@ export default async function fetchApi<T>({
   wrappedByKey,
   wrappedByList,
   populate,
-}: Props): Promise<T> {
+}: fetchApiTypes): Promise<T> {
   if (endpoint.startsWith("/")) {
     endpoint = endpoint.slice(1);
   }

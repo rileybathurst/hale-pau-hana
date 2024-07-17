@@ -45,16 +45,5 @@ const rate = await fetchApi<RateTypes>({
   <main>
     <h2 class="font-hand">Information</h2>
     <BlocksRenderer content={information.attributes.text} />
-
-    <hr />
-
-    <h2 class="font-hand">Rates</h2>
-
-    <BlocksRenderer content={rate.attributes.direct} />
-    <BlocksRenderer content={rate.attributes.children} />
-    <BlocksRenderer content={rate.attributes.cleaning} />
-    <p>VRBO - {rate.attributes.vrbo}</p>
-
-    <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
   </main>
 </Layout>
