@@ -40,13 +40,14 @@ export default async function fetchApi<T>({
 
   // with populate and no ggraphiql checking the structure on the api helps
   // console.log(url);
-  console.log(url.href);
+  // console.log(url.href);
 
   if (query) {
     for (const [key, value] of Object.entries(query)) {
       url.searchParams.append(key, value);
     }
   }
+  // ? can I do this in one step?
   const res = await fetch(url.toString());
   let data = await res.json();
 

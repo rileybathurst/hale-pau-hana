@@ -69,13 +69,34 @@ const rate = await fetchApi<RateTypes>({
     vrbo: {
       populate: true,
     },
-    children: {
-      populate: true,
-    },
     cleaning: {
       populate: true,
     },
     direct: {
+      populate: true,
+    },
+    checkin: {
+      populate: true,
+    },
+    checkout: {
+      populate: true,
+    },
+    taxRate: {
+      populate: true,
+    },
+    rates: {
+      populate: true,
+    },
+    peak_season_start: {
+      populate: true,
+    },
+    peak_season_end: {
+      populate: true,
+    },
+    peak_rate: {
+      populate: true,
+    },
+    off_season_rate: {
       populate: true,
     },
   },
@@ -103,6 +124,22 @@ const about = await fetchApi<AboutTypes>({
     },
   },
 });
+
+const peak_season_start = new Date(rate.attributes.peak_season_start);
+
+const peak_season_end = new Date(rate.attributes.peak_season_end);
+// console.log(peak_season_end);
+
+const off_season_start = new Date(rate.attributes.peak_season_start);
+off_season_start.setDate(off_season_start.getDate() - 1);
+// console.log(off_season_start);
+
+const off_season_end = new Date(rate.attributes.peak_season_end);
+off_season_end.setDate(off_season_end.getDate() + 1);
+console.log(off_season_end);
+
+// console log the month and day of off_season_start as a DateString
+// console.log(off_season_start.toLocaleString("default", { month: "long" }));
 ---
 
 <Layout title="Welcome">
@@ -124,6 +161,7 @@ const about = await fetchApi<AboutTypes>({
       ))
     }
   </div>
+  <!-- TODO: make this its own page -->
   <main>
     <hr />
     <h2 class="font-hand">Rates</h2>
@@ -132,12 +170,80 @@ const about = await fetchApi<AboutTypes>({
       or call
     </p>
 
-    <BlocksRenderer content={rate.attributes.direct} />
-    <BlocksRenderer content={rate.attributes.children} />
-    <BlocksRenderer content={rate.attributes.cleaning} />
-    <p>VRBO - {rate.attributes.vrbo}</p>
+    <!-- waiting on temporal -->
+    <h3>Off Season</h3>
+    <section class="season">
+      <div class="cal-date">
+        <span class="month">
+          {off_season_end.toUTCString().split(" ")[2]}
+        </span>
+        <span>
+          {new Date(off_season_end).getUTCDate()}
+        </span>
+      </div>
+      through
+      <div class="cal-date">
+        <span class="month">
+          {off_season_start.toUTCString().split(" ")[2]}
+        </span>
+        <span>{new Date(off_season_start).getUTCDate()}</span>
+      </div>
 
+      ${rate.attributes.off_season_rate}
+    </section>
+
+    <hr />
+    <h3>Peak Season</h3>
+    <section class="season">
+      <div class="cal-date">
+        <span class="month">
+          {peak_season_start.toUTCString().split(" ")[2]}
+        </span>
+        <span>
+          {new Date(rate.attributes.peak_season_start).getUTCDate()}
+        </span>
+      </div>
+      through
+      <div class="cal-date">
+        <span class="month">
+          {peak_season_end.toUTCString().split(" ")[2]}
+        </span>
+        <span>
+          {new Date(rate.attributes.peak_season_end).getUTCDate()}
+        </span>
+      </div>
+      ${rate.attributes.peak_rate}
+    </section>
+    <hr />
+
+    <BlocksRenderer content={rate.attributes.direct} />
     <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
+    <hr />
+    <h3>Cleaning</h3>
+    <BlocksRenderer content={rate.attributes.cleaning} />
+    <hr />
+    <h3>Avaliablity</h3>
+    <p>
+      <a
+        href={`www.VRBO.com/${rate.attributes.vrbo}`}
+        class="button"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        VRBO - {rate.attributes.vrbo}
+      </a>
+    </p>
+    <p>
+      <a
+        href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?usp=sharing"
+        class="button"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Google Sheet
+      </a>
+    </p>
+    <hr />
   </main>
 
   <div class="pelican wrap">

@@ -79,6 +79,7 @@ footer {
 
 .pelican.gridder {
   display: grid;
+  /* TODO: variable the 24rem */
   grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
   gap: 1rem;
@@ -93,4 +94,38 @@ address {
 
 footer {
   padding-block: var(--vinson);
+}
+
+/*------------------------------------*/
+/* #SEASON */
+/*------------------------------------*/
+
+.season {
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--vinson);
+}
+
+.cal-date {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kosciuszko);
+  width: max-content;
+  padding: var(--kosciuszko);
+  padding: 2px;
+  text-align: center;
+  background-color: var(--kingly-cloud);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-out);
+  }
+}
+
+.month {
+  padding: var(--kosciuszko);
+  background-color: var(--brilliance);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-metal);
+  }
 }
