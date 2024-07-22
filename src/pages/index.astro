@@ -136,7 +136,7 @@ off_season_start.setDate(off_season_start.getDate() - 1);
 
 const off_season_end = new Date(rate.attributes.peak_season_end);
 off_season_end.setDate(off_season_end.getDate() + 1);
-console.log(off_season_end);
+// console.log(off_season_end);
 
 // console log the month and day of off_season_start as a DateString
 // console.log(off_season_start.toLocaleString("default", { month: "long" }));
@@ -144,21 +144,26 @@ console.log(off_season_end);
 
 <Layout title="Welcome">
   <div class="pelican wrap">
+    <!-- slighlty hacky way to order the images from a strapi gallery -->
     {
-      about.attributes.images.data.map((image) => (
-        <div>
-          {/* astro images need this on the flex in safari but it breaks the auto height */}
-          <Image
-            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
-            class="poster"
-            alt={
-              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
-              "apartment image"
-            }
-            inferSize={true}
-          />
-        </div>
-      ))
+      about.attributes.images.data
+        .sort((a, b) =>
+          a.attributes.caption.localeCompare(b.attributes.caption)
+        )
+        .map((image) => (
+          <div>
+            {/* astro images need this on the flex in safari but it breaks the auto height */}
+            <Image
+              src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+              class="poster"
+              alt={
+                `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+                "apartment image"
+              }
+              inferSize={true}
+            />
+          </div>
+        ))
     }
   </div>
   <!-- TODO: make this its own page -->
