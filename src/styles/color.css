@@ -12,7 +12,15 @@ body {
   }
 }
 
-address,
+address {
+  background-color: whitesmoke;
+  border-radius: var(--card-radius);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-out);
+  }
+}
+
 footer {
   background-color: whitesmoke;
   box-shadow: 0 0 0 100vmax whitesmoke;

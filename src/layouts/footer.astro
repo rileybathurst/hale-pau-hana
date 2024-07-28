@@ -3,6 +3,7 @@ import fetchApi from "../lib/strapi";
 import type ContactTypes from "../interfaces/contact-types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type AddressTypes from "../interfaces/address-types";
+import FormatPhoneNumber from "../components/FormatPhoneNumber";
 
 const contact = await fetchApi<ContactTypes>({
   endpoint: "contact",
@@ -32,19 +33,6 @@ const address = await fetchApi<AddressTypes>({
     },
   },
 });
-
-function FormatPhoneNumber({
-  phoneNumberString,
-}: {
-  phoneNumberString: string;
-}) {
-  const cleaned = `${phoneNumberString}`.replace(/\D/g, "");
-  const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-
-  if (match) {
-    return `(${match[1]}) ${match[2]}-${match[3]}`;
-  }
-}
 ---
 
 <footer class="text-center">
@@ -75,5 +63,5 @@ function FormatPhoneNumber({
   <p class="font-hand">{address.attributes.building}</p>
   <p>© {new Date().getFullYear()}</p>
 
-  <a href="/ammenities">Ammenities</a>
+  <!-- <a href="/ammenities">Ammenities</a> -->
 </footer>

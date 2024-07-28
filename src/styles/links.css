@@ -19,27 +19,56 @@ a:where(:hover, :focus) {
   }
 }
 
-.link-subtle {
-  text-decoration: none;
-}
+a.active {
+  background-color: var(--palm-50);
 
-.link-subtle:where(:hover, :focus) {
-  text-decoration: underline;
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--mango-500);
+  }
 }
 
 /*------------------------------------*/
+/* #BUTTON */
+/*------------------------------------*/
 
-.big-boy ul li a {
+.button {
+  text-decoration: none;
+  background-color: var(--palm-50);
+  margin-block-end: var(--kosciuszko);
+  display: inline-block;
+}
+
+button:hover,
+.button:hover {
+  background-color: var(--palm-100);
+
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--black-out);
+  }
+}
+
+.big-boy ul li a,
+button,
+.button {
   padding: var(--kosciuszko);
   border-radius: var(--card-radius);
   transition: var(--fade);
 }
 
 .big-boy ul li a:hover {
-  background-color: var(--kingly-cloud);
-  background-color: var(--palm-100);
+  background-color: var(--palm-50);
 
   @media (prefers-color-scheme: dark) {
     background-color: var(--black-out);
   }
+}
+
+/*------------------------------------*/
+
+.link-subtle {
+  text-decoration: none;
+}
+
+.link-subtle:where(:hover, :focus) {
+  text-decoration: underline;
 }

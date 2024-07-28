@@ -4,6 +4,27 @@ import SmallMenu from "../components/SmallMenu";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import type TextTypes from "../interfaces/text-types";
 import type AddressTypes from "../interfaces/address-types";
+import type ContactTypes from "../interfaces/contact-types";
+import FormatPhoneNumber from "../components/FormatPhoneNumber";
+
+const contact = await fetchApi<ContactTypes>({
+  endpoint: "contact",
+  wrappedByKey: "data",
+  populate: {
+    name: {
+      populate: true,
+    },
+    email: {
+      populate: true,
+    },
+    phone: {
+      populate: true,
+    },
+    postal: {
+      populate: true,
+    },
+  },
+});
 
 const about = await fetchApi<TextTypes>({
   endpoint: "about",
@@ -48,6 +69,11 @@ const address = await fetchApi<AddressTypes>({
     },
   },
 });
+
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1); // remove the first "/"
+
+console.log(currentPath);
 ---
 
 <header class="header">
@@ -59,18 +85,61 @@ const address = await fetchApi<AddressTypes>({
   <div class="kilimanjaro-p text-center">
     <BlocksRenderer content={about.attributes.text} />
   </div>
+  <hr />
+  <p class="text-center">
+    <a
+      href={`mailto:${contact.attributes.email}?subject=${address.attributes.building}`}
+      class="button"
+    >
+      {contact.attributes.email}
+    </a>
+    <a href={`tel:${contact.attributes.phone}`} class="button">
+      <FormatPhoneNumber phoneNumberString={contact.attributes.phone} />
+    </a>
+  </p>
+
+  <hr />
 
   <SmallMenu client:load />
 
   <nav class="big-boy">
     <ul>
-      <li><a href="/directions">Directions</a></li>
-      <li><a href="/information">Information</a></li>
-      <li><a href="/see-and-do">Activities</a></li>
-      <li><a href="/departure">Departure</a></li>
-      <li><a href="/rates">Rates</a></li>
+      <li>
+        <a
+          href="/directions"
+          class={currentPath === "directions" ? "active" : null}
+        >
+          Directions
+        </a>
+      </li>
+      <li>
+        <a
+          href="/information"
+          class={currentPath === "information" ? "active" : null}
+        >
+          Information
+        </a>
+      </li>
+      <li>
+        <a href="/see-and-do"> Activities </a>
+      </li>
+      <li>
+        <a
+          href="/departure"
+          class={currentPath === "departure" ? "active" : null}
+        >
+          Departure
+        </a>
+      </li>
+      <li>
+        <a href="/rates" class={currentPath === "rates" ? "active" : null}>
+          Rates
+        </a>
+      </li>
     </ul>
   </nav>
+
+  <hr />
   <address class="elbrus text-center">
     <a
       href={address.attributes.googleMapLink}

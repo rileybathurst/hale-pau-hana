@@ -101,12 +101,16 @@ footer {
 /*------------------------------------*/
 
 .season {
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: 1fr min-content 1fr;
   gap: var(--vinson);
+  text-align: center;
+  margin-block: var(--vinson);
 }
 
 .cal-date {
+  justify-self: center;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
   gap: var(--kosciuszko);
@@ -119,6 +123,16 @@ footer {
   @media (prefers-color-scheme: dark) {
     background-color: var(--black-out);
   }
+}
+.title {
+  grid-column: 1/4;
+  margin: 0;
+}
+
+.through {
+  grid-row: 2;
+  border-block: 1px solid var(--kingly-cloud);
+  padding-block: var(--kosciuszko);
 }
 
 .month {

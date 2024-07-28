@@ -13,6 +13,7 @@ import type AddressTypes from "../interfaces/address-types";
 import type RateTypes from "../interfaces/rate-types";
 import type AboutTypes from "../interfaces/about-types";
 import type TextImageTypes from "../interfaces/text-images-types";
+import RateTable from "../components/rate-table.astro";
 
 const activity = await fetchApi<TextImageTypes>({
   endpoint: "activity",
@@ -145,6 +146,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 <Layout title="Welcome">
   <div class="pelican wrap">
     <!-- slighlty hacky way to order the images from a strapi gallery -->
+    <!-- TODO: needs a fallback on the caption order -->
     {
       about.attributes.images.data
         .sort((a, b) =>
@@ -175,50 +177,8 @@ off_season_end.setDate(off_season_end.getDate() + 1);
       or call
     </p>
 
-    <!-- waiting on temporal -->
-    <h3>Off Season</h3>
-    <section class="season">
-      <div class="cal-date">
-        <span class="month">
-          {off_season_end.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(off_season_end).getUTCDate()}
-        </span>
-      </div>
-      through
-      <div class="cal-date">
-        <span class="month">
-          {off_season_start.toUTCString().split(" ")[2]}
-        </span>
-        <span>{new Date(off_season_start).getUTCDate()}</span>
-      </div>
-
-      ${rate.attributes.off_season_rate}
-    </section>
-
     <hr />
-    <h3>Peak Season</h3>
-    <section class="season">
-      <div class="cal-date">
-        <span class="month">
-          {peak_season_start.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(rate.attributes.peak_season_start).getUTCDate()}
-        </span>
-      </div>
-      through
-      <div class="cal-date">
-        <span class="month">
-          {peak_season_end.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(rate.attributes.peak_season_end).getUTCDate()}
-        </span>
-      </div>
-      ${rate.attributes.peak_rate}
-    </section>
+    <RateTable />
     <hr />
 
     <BlocksRenderer content={rate.attributes.direct} />

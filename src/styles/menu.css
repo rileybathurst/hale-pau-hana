@@ -66,6 +66,7 @@
     list-style: none; /* reset */
     padding: 0; /* reset */
     margin: 0; /* reset */
+    margin-block-start: var(--kilimanjaro);
 
     > * {
       flex: 1 1 auto;

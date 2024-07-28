@@ -90,6 +90,7 @@
   }
 
   /* TODO: check for p3 support */
+  --palm-50: oklch(90% 0.05 150);
   --palm-100: oklch(65% 0.1 150); /* default */
   --palm-200: oklch(50% 0.1 150);
   --palm-300: oklch(45% 0.1 150);
@@ -100,4 +101,5 @@
   --mango-200: oklch(90% 0.125 80);
   --mango-300: oklch(80% 0.15 70); /* default */
   --mango-400: oklch(75% 0.2 70);
+  --mango-500: oklch(45% 0.2 70);
 }

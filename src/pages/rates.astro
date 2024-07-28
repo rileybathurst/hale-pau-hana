@@ -1,8 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import fetchApi from "../lib/strapi";
+import RateTable from "../components/rate-table.astro";
+import Layout from "../layouts/Layout.astro";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+
 import type RateTypes from "../interfaces/rate-types";
+// you could do something about mapping all the season but with just 2 this works
 
 // TODO: move a bunch of this overlap with index to a shared file
 const rate = await fetchApi<RateTypes>({
@@ -31,32 +34,8 @@ const rate = await fetchApi<RateTypes>({
     rates: {
       populate: true,
     },
-    peak_season_start: {
-      populate: true,
-    },
-    peak_season_end: {
-      populate: true,
-    },
-    peak_rate: {
-      populate: true,
-    },
-    off_season_rate: {
-      populate: true,
-    },
   },
 });
-
-const peak_season_start = new Date(rate.attributes.peak_season_start);
-
-const peak_season_end = new Date(rate.attributes.peak_season_end);
-// console.log(peak_season_end);
-
-const off_season_start = new Date(rate.attributes.peak_season_start);
-off_season_start.setDate(off_season_start.getDate() - 1);
-// console.log(off_season_start);
-
-const off_season_end = new Date(rate.attributes.peak_season_end);
-off_season_end.setDate(off_season_end.getDate() + 1);
 ---
 
 <Layout title="Rates">
@@ -68,50 +47,8 @@ off_season_end.setDate(off_season_end.getDate() + 1);
       or call
     </p>
 
-    <!-- waiting on temporal -->
-    <h3>Off Season</h3>
-    <section class="season">
-      <div class="cal-date">
-        <span class="month">
-          {off_season_end.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(off_season_end).getUTCDate()}
-        </span>
-      </div>
-      through
-      <div class="cal-date">
-        <span class="month">
-          {off_season_start.toUTCString().split(" ")[2]}
-        </span>
-        <span>{new Date(off_season_start).getUTCDate()}</span>
-      </div>
-
-      ${rate.attributes.off_season_rate}
-    </section>
-
     <hr />
-    <h3>Peak Season</h3>
-    <section class="season">
-      <div class="cal-date">
-        <span class="month">
-          {peak_season_start.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(rate.attributes.peak_season_start).getUTCDate()}
-        </span>
-      </div>
-      through
-      <div class="cal-date">
-        <span class="month">
-          {peak_season_end.toUTCString().split(" ")[2]}
-        </span>
-        <span>
-          {new Date(rate.attributes.peak_season_end).getUTCDate()}
-        </span>
-      </div>
-      ${rate.attributes.peak_rate}
-    </section>
+    <RateTable />
     <hr />
 
     <BlocksRenderer content={rate.attributes.direct} />

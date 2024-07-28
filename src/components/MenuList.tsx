@@ -1,3 +1,5 @@
+// this has to be react as its inside react
+
 export default function MenuList() {
   return (
     <ul>
