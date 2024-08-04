@@ -148,7 +148,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
     <!-- slighlty hacky way to order the images from a strapi gallery -->
     <!-- TODO: needs a fallback on the caption order -->
     {
-      about.attributes.images.data
+      about?.attributes.images.data
         .sort((a, b) =>
           a.attributes.caption.localeCompare(b.attributes.caption)
         )

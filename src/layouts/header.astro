@@ -74,6 +74,8 @@ const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1); // remove the first "/"
 
 console.log(currentPath);
+
+// console.log(about);
 ---
 
 <header class="header">
@@ -82,9 +84,13 @@ console.log(currentPath);
       {address.attributes.building}
     </a>
   </h1>
-  <div class="kilimanjaro-p text-center">
-    <BlocksRenderer content={about.attributes.text} />
-  </div>
+  {
+    about?.attributes.text ? (
+      <div class="kilimanjaro-p text-center">
+        <BlocksRenderer content={about?.attributes.text} />
+      </div>
+    ) : null
+  }
   <hr />
   <p class="text-center">
     <a
