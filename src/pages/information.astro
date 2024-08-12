@@ -20,9 +20,6 @@ const rate = await fetchApi<RateTypes>({
   wrappedByKey: "data",
   populate: {
     taxId: { populate: true },
-    vrbo: {
-      populate: true,
-    },
     children: {
       populate: true,
     },

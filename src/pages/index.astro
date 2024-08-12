@@ -67,9 +67,6 @@ const rate = await fetchApi<RateTypes>({
   wrappedByKey: "data",
   populate: {
     taxId: { populate: true },
-    vrbo: {
-      populate: true,
-    },
     cleaning: {
       populate: true,
     },
@@ -188,16 +185,6 @@ off_season_end.setDate(off_season_end.getDate() + 1);
     <BlocksRenderer content={rate.attributes.cleaning} />
     <hr />
     <h3>Avaliablity</h3>
-    <p>
-      <a
-        href={`https:/vrbo.com/${rate.attributes.vrbo}`}
-        class="button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        VRBO - {rate.attributes.vrbo}
-      </a>
-    </p>
     <p>
       <a
         href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?usp=sharing"
