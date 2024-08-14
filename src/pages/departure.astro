@@ -15,12 +15,12 @@ const departure = await fetchApi<TextTypes>({
 });
 
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1); // remove the first "/"
+const currentPath = pathname.slice(1).slice(0, -1); // remove the first and last "/"
 ---
 
 <script>
   const pathname = new URL(Astro.request.url).pathname;
-  const currentPath = pathname.slice(1); // remove the first "/"
+  const currentPath = pathname.slice(1).slice(0, -1); // remove the first and last "/"
   console.log(currentPath);
 </script>
 
@@ -30,5 +30,5 @@ const currentPath = pathname.slice(1); // remove the first "/"
     <BlocksRenderer content={departure.attributes.text} />
   </main>
 </Layout>
-<p>The current URL is: {Astro.url.pathname.slice(1)}</p> this works so theres something
-to it
+<p>The current URL is: {Astro.url.pathname}</p> this works so theres something to
+it /departure/
