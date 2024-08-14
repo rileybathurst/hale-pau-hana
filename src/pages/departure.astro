@@ -30,4 +30,5 @@ const currentPath = pathname.slice(1); // remove the first "/"
     <BlocksRenderer content={departure.attributes.text} />
   </main>
 </Layout>
-<p>The current URL is: {Astro.url}</p>
+<p>The current URL is: {Astro.url.pathname.slice(1)}</p> this works so theres something
+to it

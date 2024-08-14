@@ -138,6 +138,7 @@ console.log("🦄");
           class={currentPath === "departure" ? "active" : null}
         >
           Departure
+          {Astro.url.pathname.slice(1) === "departure" ? "🛫" : null}
         </a>
       </li>
       <li>
