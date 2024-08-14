@@ -18,9 +18,16 @@ const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1); // remove the first "/"
 ---
 
+<script>
+  const pathname = new URL(Astro.request.url).pathname;
+  const currentPath = pathname.slice(1); // remove the first "/"
+  console.log(currentPath);
+</script>
+
 <Layout title="Departure">
   <main class={currentPath === "departure" ? "active" : null}>
     <h2 class="font-hand">Departure</h2>
     <BlocksRenderer content={departure.attributes.text} />
   </main>
 </Layout>
+<p>The current URL is: {Astro.url}</p>
