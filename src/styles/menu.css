@@ -72,6 +72,14 @@
       flex: 1 1 auto;
       text-align: center;
     }
+
+    .current {
+      background-color: var(--palm-50);
+    }
+
+    .current:hover {
+      background-color: var(--palm-100);
+    }
   }
 }
 

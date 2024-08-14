@@ -70,15 +70,7 @@ const address = await fetchApi<AddressTypes>({
   },
 });
 
-const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1); // remove the first "/"
-
-// this might need to be reactlive thing
-console.log(currentPath);
-console.log(Astro.url);
-console.log("🦄");
-
-// console.log(about);
+console.log(Astro.url.pathname);
 ---
 
 <header class="header">
@@ -116,7 +108,10 @@ console.log("🦄");
       <li>
         <a
           href="/directions"
-          class={currentPath === "directions" ? "active" : null}
+          class={Astro.url.pathname === "/directions" ||
+          Astro.url.pathname === "/directions/"
+            ? "current"
+            : null}
         >
           Directions
         </a>
@@ -124,29 +119,44 @@ console.log("🦄");
       <li>
         <a
           href="/information"
-          class={currentPath === "information" ? "active" : null}
+          class={Astro.url.pathname === "/information" ||
+          Astro.url.pathname === "/information/"
+            ? "current"
+            : null}
         >
           Information
         </a>
       </li>
       <li>
-        <a href="/see-and-do"> Activities </a>
+        <a
+          href="/see-and-do"
+          class={Astro.url.pathname === "/see-and-do" ||
+          Astro.url.pathname === "/see-and-do/"
+            ? "current"
+            : null}
+        >
+          Activities
+        </a>
       </li>
       <li>
         <a
           href="/departure"
-          class={currentPath === "departure" ? "active" : null}
+          class={Astro.url.pathname === "/departure" ||
+          Astro.url.pathname === "/departure/"
+            ? "current"
+            : null}
         >
           Departure
-          {
-            Astro.url.pathname.slice(1).slice(0, -1) === "departure"
-              ? "🛫"
-              : null
-          }
         </a>
       </li>
       <li>
-        <a href="/rates" class={currentPath === "rates" ? "active" : null}>
+        <a
+          href="/rates"
+          class={Astro.url.pathname === "/rates" ||
+          Astro.url.pathname === "/rates/"
+            ? "current"
+            : null}
+        >
           Rates
         </a>
       </li>
