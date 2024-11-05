@@ -10,7 +10,7 @@ import FormatPhoneNumber from "../components/FormatPhoneNumber";
 const contact = await fetchApi<ContactTypes>({
   endpoint: "contact",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     name: {
       populate: true,
     },
@@ -23,7 +23,7 @@ const contact = await fetchApi<ContactTypes>({
     postal: {
       populate: true,
     },
-  },
+  }, */
 });
 
 const about = await fetchApi<TextTypes>({
@@ -39,7 +39,7 @@ const about = await fetchApi<TextTypes>({
 const address = await fetchApi<AddressTypes>({
   endpoint: "address",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     streetAddress: {
       populate: true,
     },
@@ -67,35 +67,37 @@ const address = await fetchApi<AddressTypes>({
     googleMapLink: {
       populate: true,
     },
-  },
+  }, */
 });
 
-console.log(Astro.url.pathname);
+// console.log(address);
+
+// console.log(Astro.url.pathname);
 ---
 
 <header class="header">
   <h1 class="font-hand text-center">
     <a href="/" class="link-subtle">
-      {address.attributes.building}
+      {address.building}
     </a>
   </h1>
   {
-    about?.attributes.text ? (
+    about?.text ? (
       <div class="kilimanjaro-p text-center">
-        <BlocksRenderer content={about?.attributes.text} />
+        <BlocksRenderer content={about?.text} />
       </div>
     ) : null
   }
   <hr />
   <p class="text-center">
     <a
-      href={`mailto:${contact.attributes.email}?subject=${address.attributes.building}`}
+      href={`mailto:${contact.email}?subject=${address.building}`}
       class="button"
     >
-      {contact.attributes.email}
+      {contact.email}
     </a>
-    <a href={`tel:${contact.attributes.phone}`} class="button">
-      <FormatPhoneNumber phoneNumberString={contact.attributes.phone} />
+    <a href={`tel:${contact.phone}`} class="button">
+      <FormatPhoneNumber phoneNumberString={contact.phone} />
     </a>
   </p>
 
@@ -165,18 +167,12 @@ console.log(Astro.url.pathname);
 
   <hr />
   <address class="elbrus text-center">
-    <a
-      href={address.attributes.googleMapLink}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {address.attributes.streetAddress}
+    <a href={address.googleMapLink} target="_blank" rel="noopener noreferrer">
+      {address.streetAddress}
       <br />
-      {address.attributes.addressLocality},
-      {address.attributes.island} - {
-        address.attributes.addressRegion == "HI"
-          ? "Hawaii"
-          : address.attributes.addressRegion
+      {address.addressLocality},
+      {address.island} - {
+        address.addressRegion == "HI" ? "Hawaii" : address.addressRegion
       }
     </a>
   </address>

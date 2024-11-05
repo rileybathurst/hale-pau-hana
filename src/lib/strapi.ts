@@ -1,3 +1,4 @@
+// import querystring from "node:querystring";
 import qs from "qs";
 
 interface fetchApiTypes {
@@ -11,6 +12,7 @@ interface fetchApiTypes {
       populate: boolean;
     };
   };
+  fields?: string[];
 }
 
 /**
@@ -29,13 +31,32 @@ export default async function fetchApi<T>({
   wrappedByKey,
   wrappedByList,
   populate,
+  fields,
 }: fetchApiTypes): Promise<T> {
   if (endpoint.startsWith("/")) {
     endpoint = endpoint.slice(1);
   }
 
+/* const fieldPasser = {
+    fields: fields,
+  }; */
+
+  // ${populate ? `?${qs.stringify({ populate })}` : ""}
+  // console.log(populate ? `?${qs.stringify({ populate })}` : "")
+
+  // Use the stringify() method on the object
+  // const passedFields = querystring.stringify(fieldPasser);
+
+  // console.log(passedFields);
+
+  // * the line breaks are important to not get whitespace in the url
+
   const url = new URL(
-    `${import.meta.env.STRAPI_URL}api/${endpoint}${populate ? `?${qs.stringify({ populate })}` : ""}`
+    `
+    ${import.meta.env.STRAPI_URL}api/${endpoint}${
+      populate ? `?${qs.stringify({populate})}` : ""
+    }
+  `
   );
 
   // with populate and no ggraphiql checking the structure on the api helps

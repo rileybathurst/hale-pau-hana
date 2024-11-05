@@ -7,17 +7,17 @@ import Layout from "../layouts/Layout.astro";
 const departure = await fetchApi<TextTypes>({
   endpoint: "departure",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     text: {
       populate: true,
     },
-  },
+  }, */
 });
 ---
 
 <Layout title="Departure">
   <main>
     <h2 class="font-hand">Departure</h2>
-    <BlocksRenderer content={departure.attributes.text} />
+    <BlocksRenderer content={departure.text} />
   </main>
 </Layout>

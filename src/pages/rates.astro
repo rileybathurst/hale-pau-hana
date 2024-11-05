@@ -11,7 +11,7 @@ import type RateTypes from "../interfaces/rate-types";
 const rate = await fetchApi<RateTypes>({
   endpoint: "rate",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     taxId: { populate: true },
     cleaning: {
       populate: true,
@@ -31,7 +31,7 @@ const rate = await fetchApi<RateTypes>({
     rates: {
       populate: true,
     },
-  },
+  }, */
 });
 ---
 
@@ -48,11 +48,11 @@ const rate = await fetchApi<RateTypes>({
     <RateTable />
     <hr />
 
-    <BlocksRenderer content={rate.attributes.direct} />
-    <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
+    <BlocksRenderer content={rate.direct} />
+    <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
     <hr />
     <h3>Cleaning</h3>
-    <BlocksRenderer content={rate.attributes.cleaning} />
+    <BlocksRenderer content={rate.cleaning} />
     <hr />
     <h3>Avaliablity</h3>
     <p>

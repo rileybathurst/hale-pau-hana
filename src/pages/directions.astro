@@ -7,11 +7,11 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 const direction = await fetchApi<TextTypes>({
   endpoint: "direction",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     text: {
       populate: true,
     },
-  },
+  }, */
 });
 ---
 
@@ -19,6 +19,6 @@ const direction = await fetchApi<TextTypes>({
   <main>
     <h2 class="font-hand">Directions</h2>
     <h3 class="">Kahului Airport to Hale Pau Hana</h3>
-    <BlocksRenderer content={direction.attributes.text} />
+    <BlocksRenderer content={direction.text} />
   </main>
 </Layout>

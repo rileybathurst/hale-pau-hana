@@ -9,7 +9,7 @@ import { Image } from "astro:assets";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import ApartmentLayout from "../images/ApartmentLayout.astro";
 // import type TextTypes from "../interfaces/text-types";
-import type AddressTypes from "../interfaces/address-types";
+// import type AddressTypes from "../interfaces/address-types";
 import type RateTypes from "../interfaces/rate-types";
 import type AboutTypes from "../interfaces/about-types";
 import type TextImageTypes from "../interfaces/text-images-types";
@@ -19,13 +19,14 @@ const activity = await fetchApi<TextImageTypes>({
   endpoint: "activity",
   wrappedByKey: "data",
   populate: {
-    text: {
+    /*     text: {
       populate: true,
-    },
+    }, */
     images: {
       populate: true,
     },
   },
+  // fields: ["text", "images"],
 });
 
 /* const address = await fetchApi<AddressTypes>({
@@ -65,7 +66,7 @@ const activity = await fetchApi<TextImageTypes>({
 const rate = await fetchApi<RateTypes>({
   endpoint: "rate",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     taxId: { populate: true },
     cleaning: {
       populate: true,
@@ -97,21 +98,22 @@ const rate = await fetchApi<RateTypes>({
     off_season_rate: {
       populate: true,
     },
-  },
+  }, */
 });
+
+// console.log(rate);
 
 const amenitie = await fetchApi<TextImageTypes>({
   endpoint: "amenitie",
   wrappedByKey: "data",
   populate: {
-    text: {
-      populate: true,
-    },
     images: {
       populate: true,
     },
   },
 });
+
+// console.log(amenitie);
 
 const about = await fetchApi<AboutTypes>({
   endpoint: "about",
@@ -121,18 +123,21 @@ const about = await fetchApi<AboutTypes>({
       populate: true,
     },
   },
+  fields: ["images"],
 });
 
-const peak_season_start = new Date(rate.attributes.peak_season_start);
+// console.log(about);
 
-const peak_season_end = new Date(rate.attributes.peak_season_end);
+// const peak_season_start = new Date(rate.peak_season_start);
+
+// const peak_season_end = new Date(rate.peak_season_end);
 // console.log(peak_season_end);
 
-const off_season_start = new Date(rate.attributes.peak_season_start);
+const off_season_start = new Date(rate.peak_season_start);
 off_season_start.setDate(off_season_start.getDate() - 1);
 // console.log(off_season_start);
 
-const off_season_end = new Date(rate.attributes.peak_season_end);
+const off_season_end = new Date(rate.peak_season_end);
 off_season_end.setDate(off_season_end.getDate() + 1);
 // console.log(off_season_end);
 
@@ -145,18 +150,16 @@ off_season_end.setDate(off_season_end.getDate() + 1);
     <!-- slighlty hacky way to order the images from a strapi gallery -->
     <!-- TODO: needs a fallback on the caption order -->
     {
-      about?.attributes.images.data
-        .sort((a, b) =>
-          a.attributes.caption.localeCompare(b.attributes.caption)
-        )
+      about?.images
+        .sort((a, b) => a.caption.localeCompare(b.caption))
         .map((image) => (
           <div>
             {/* astro images need this on the flex in safari but it breaks the auto height */}
             <Image
-              src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+              src={`${import.meta.env.AWS_IMAGES}${image.name}`}
               class="poster"
               alt={
-                `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+                `${import.meta.env.STRAPI_IMAGE_URL}${image.alternativeText}` ||
                 "apartment image"
               }
               inferSize={true}
@@ -178,11 +181,11 @@ off_season_end.setDate(off_season_end.getDate() + 1);
     <RateTable />
     <hr />
 
-    <BlocksRenderer content={rate.attributes.direct} />
-    <p>Hawaii Hotel & excise Tax is %{rate.attributes.taxRate} additional</p>
+    <BlocksRenderer content={rate.direct} />
+    <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
     <hr />
     <h3>Cleaning</h3>
-    <BlocksRenderer content={rate.attributes.cleaning} />
+    <BlocksRenderer content={rate.cleaning} />
     <hr />
     <h3>Avaliablity</h3>
     <p>
@@ -200,13 +203,13 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 
   <div class="pelican wrap">
     {
-      amenitie.attributes.images.data.map((image) => (
+      amenitie.images.map((image) => (
         <div>
           <Image
-            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+            src={`${import.meta.env.AWS_IMAGES}${image.name}`}
             class="poster"
             alt={
-              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.alternativeText}` ||
               "apartment image"
             }
             inferSize={true}
@@ -221,18 +224,18 @@ off_season_end.setDate(off_season_end.getDate() + 1);
   <section>
     <hr />
     <h2 class="font-hand">Amenities</h2>
-    <BlocksRenderer content={amenitie.attributes.text} />
+    <BlocksRenderer content={amenitie.text} />
   </section>
 
   <div class="pelican wrap">
     {
-      activity.attributes.images.data.slice(0, 2).map((image) => (
+      activity.images.slice(0, 2).map((image) => (
         <div>
           <Image
-            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+            src={`${import.meta.env.AWS_IMAGES}${image.name}`}
             class="poster"
             alt={
-              `${import.meta.env.STRAPI_IMAGE_URL}${image.attributes.alternativeText}` ||
+              `${import.meta.env.STRAPI_IMAGE_URL}${image.alternativeText}` ||
               "apartment image"
             }
             inferSize={true}
@@ -244,6 +247,6 @@ off_season_end.setDate(off_season_end.getDate() + 1);
   <section>
     <hr />
     <h2 class="font-hand">Things to see and do</h2>
-    <BlocksRenderer content={activity.attributes.text} />
+    <BlocksRenderer content={activity.text} />
   </section>
 </Layout>

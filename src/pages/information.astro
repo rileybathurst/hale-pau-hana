@@ -2,20 +2,15 @@
 import fetchApi from "../lib/strapi";
 import Layout from "../layouts/Layout.astro";
 import type TextTypes from "../interfaces/text-types";
-import type RateTypes from "../interfaces/rate-types";
+// import type RateTypes from "../interfaces/rate-types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 const information = await fetchApi<TextTypes>({
   endpoint: "info",
   wrappedByKey: "data",
-  populate: {
-    text: {
-      populate: true,
-    },
-  },
 });
 
-const rate = await fetchApi<RateTypes>({
+/* const rate = await fetchApi<RateTypes>({
   endpoint: "rate",
   wrappedByKey: "data",
   populate: {
@@ -33,7 +28,7 @@ const rate = await fetchApi<RateTypes>({
       populate: true,
     },
   },
-});
+}); */
 
 // console.log(information);
 ---
@@ -41,6 +36,6 @@ const rate = await fetchApi<RateTypes>({
 <Layout title="Information">
   <main>
     <h2 class="font-hand">Information</h2>
-    <BlocksRenderer content={information.attributes.text} />
+    <BlocksRenderer content={information.text} />
   </main>
 </Layout>

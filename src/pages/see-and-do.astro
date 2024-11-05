@@ -9,9 +9,9 @@ const activity = await fetchApi<TextImageTypes>({
   endpoint: "activity",
   wrappedByKey: "data",
   populate: {
-    text: {
+    /* text: {
       populate: true,
-    },
+    }, */
     images: {
       populate: true,
     },
@@ -22,14 +22,14 @@ const activity = await fetchApi<TextImageTypes>({
 <Layout title="See and Do">
   <div class="pelican wrap">
     {
-      activity.attributes.images.data.map((image) => (
+      activity.images.map((image) => (
         <div>
           <Image
-            src={`${import.meta.env.AWS_IMAGES}${image.attributes.name}`}
+            src={`${import.meta.env.AWS_IMAGES}${image.name}`}
             class="poster"
             alt={
-              `${image.attributes.alternativeText}` ||
-              `${import.meta.env.AWS_IMAGES}${image.attributes.name}` ||
+              `${image.alternativeText}` ||
+              `${import.meta.env.AWS_IMAGES}${image.name}` ||
               "apartment image"
             }
             inferSize={true}
@@ -40,6 +40,6 @@ const activity = await fetchApi<TextImageTypes>({
   </div>
   <main>
     <h2 class="font-hand">Things to see and do</h2>
-    <BlocksRenderer content={activity.attributes.text} />
+    <BlocksRenderer content={activity.text} />
   </main>
 </Layout>

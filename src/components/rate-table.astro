@@ -7,7 +7,7 @@ import type RateTypes from "../interfaces/rate-types";
 const rate = await fetchApi<RateTypes>({
   endpoint: "rate",
   wrappedByKey: "data",
-  populate: {
+  /* populate: {
     peak_season_start: {
       populate: true,
     },
@@ -20,19 +20,19 @@ const rate = await fetchApi<RateTypes>({
     off_season_rate: {
       populate: true,
     },
-  },
+  }, */
 });
 
-const peak_season_start = new Date(rate.attributes.peak_season_start);
+const peak_season_start = new Date(rate.peak_season_start);
 
-const peak_season_end = new Date(rate.attributes.peak_season_end);
+const peak_season_end = new Date(rate.peak_season_end);
 // console.log(peak_season_end);
 
-const off_season_start = new Date(rate.attributes.peak_season_start);
+const off_season_start = new Date(rate.peak_season_start);
 off_season_start.setDate(off_season_start.getDate() - 1);
 // console.log(off_season_start);
 
-const off_season_end = new Date(rate.attributes.peak_season_end);
+const off_season_end = new Date(rate.peak_season_end);
 off_season_end.setDate(off_season_end.getDate() + 1);
 ---
 
@@ -40,7 +40,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 <section class="season">
   <!-- ? should this be a hyphen or colon -->
   <h3 class="title kilimanjaro">
-    Off Season - ${rate.attributes.off_season_rate}
+    Off Season - ${rate.off_season_rate}
   </h3>
   <div class="cal-date">
     <span class="month">
@@ -63,14 +63,14 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 
 <section class="season">
   <h3 class="title kilimanjaro">
-    Peak Season : ${rate.attributes.peak_rate}
+    Peak Season : ${rate.peak_rate}
   </h3>
   <div class="cal-date">
     <span class="month">
       {peak_season_start.toUTCString().split(" ")[2]}
     </span>
     <span>
-      {new Date(rate.attributes.peak_season_start).getUTCDate()}
+      {new Date(rate.peak_season_start).getUTCDate()}
     </span>
   </div>
   <p class="through">through</p>
@@ -79,7 +79,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
       {peak_season_end.toUTCString().split(" ")[2]}
     </span>
     <span>
-      {new Date(rate.attributes.peak_season_end).getUTCDate()}
+      {new Date(rate.peak_season_end).getUTCDate()}
     </span>
   </div>
 </section>
