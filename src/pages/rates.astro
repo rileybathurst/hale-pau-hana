@@ -43,28 +43,36 @@ const rate = await fetchApi<RateTypes>({
       If you want to reserve a date or have comments or questions, please email
       or call
     </p>
-
-    <hr />
-    <RateTable />
-    <hr />
-
-    <BlocksRenderer content={rate.direct} />
-    <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
-    <hr />
-    <h3>Cleaning</h3>
-    <BlocksRenderer content={rate.cleaning} />
-    <hr />
-    <h3>Avaliablity</h3>
     <p>
       <a
-        href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?usp=sharing"
+        href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?gid=0#gid=0"
         class="button"
-        target="_blank"
-        rel="noopener noreferrer"
       >
-        Google Sheet
+        Availability
       </a>
+
+      <hr />
+      <RateTable />
+      <hr />
+
+      <BlocksRenderer content={rate.direct} />
+      <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
+      <hr />
+      <h3>Cleaning</h3>
+      <BlocksRenderer content={rate.cleaning} />
+      <hr />
+      <h3>Availability</h3>
+      <p>
+        <a
+          href={rate.availability}
+          class="button"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google Sheet
+        </a>
+      </p>
+      <hr />
     </p>
-    <hr />
   </main>
 </Layout>

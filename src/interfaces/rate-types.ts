@@ -10,5 +10,6 @@ export default interface RateTypes {
   peak_season_end: string;
   off_season_rate: number;
   peak_rate: number;
+  availability: string;
 }
 [];

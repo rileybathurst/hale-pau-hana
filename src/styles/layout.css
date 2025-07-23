@@ -19,7 +19,6 @@
 }
 
 .condor,
-header,
 main,
 section,
 footer {
@@ -30,7 +29,8 @@ footer {
   width: 100%;
 }
 
-.pelican {
+.pelican,
+header {
   max-width: var(--pelican);
   flex-basis: var(--pelican);
   margin-inline: auto;
@@ -80,7 +80,7 @@ footer {
 .pelican.gridder {
   display: grid;
   /* TODO: variable the 24rem */
-  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  /* grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr)); */
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
   gap: 1rem;
 }
@@ -115,7 +115,7 @@ footer {
   flex-direction: column;
   gap: var(--kosciuszko);
   width: max-content;
-  padding: var(--kosciuszko);
+  /* padding: var(--kosciuszko); */
   padding: 2px;
   text-align: center;
   background-color: var(--kingly-cloud);
