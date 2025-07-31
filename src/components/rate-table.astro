@@ -7,20 +7,6 @@ import type RateTypes from "../interfaces/rate-types";
 const rate = await fetchApi<RateTypes>({
   endpoint: "rate",
   wrappedByKey: "data",
-  /* populate: {
-    peak_season_start: {
-      populate: true,
-    },
-    peak_season_end: {
-      populate: true,
-    },
-    peak_rate: {
-      populate: true,
-    },
-    off_season_rate: {
-      populate: true,
-    },
-  }, */
 });
 
 const peak_season_start = new Date(rate.peak_season_start);

@@ -1,78 +1,10 @@
 ---
-import fetchApi from "../lib/strapi";
-import RateTable from "../components/rate-table.astro";
-import Layout from "../layouts/Layout.astro";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-
-import type RateTypes from "../interfaces/rate-types";
-// you could do something about mapping all the season but with just 2 this works
-
-// TODO: move a bunch of this overlap with index to a shared file
-const rate = await fetchApi<RateTypes>({
-  endpoint: "rate",
-  wrappedByKey: "data",
-  /* populate: {
-    taxId: { populate: true },
-    cleaning: {
-      populate: true,
-    },
-    direct: {
-      populate: true,
-    },
-    checkin: {
-      populate: true,
-    },
-    checkout: {
-      populate: true,
-    },
-    taxRate: {
-      populate: true,
-    },
-    rates: {
-      populate: true,
-    },
-  }, */
-});
+import Layout from "../layouts/layout.astro";
+import RateBlock from "../components/rate-block.astro";
 ---
 
 <Layout title="Rates">
   <main>
-    <hr />
-    <h2 class="font-hand">Rates</h2>
-    <p>
-      If you want to reserve a date or have comments or questions, please email
-      or call
-    </p>
-    <p>
-      <a
-        href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?gid=0#gid=0"
-        class="button"
-      >
-        Availability
-      </a>
-
-      <hr />
-      <RateTable />
-      <hr />
-
-      <BlocksRenderer content={rate.direct} />
-      <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
-      <hr />
-      <h3>Cleaning</h3>
-      <BlocksRenderer content={rate.cleaning} />
-      <hr />
-      <h3>Availability</h3>
-      <p>
-        <a
-          href={rate.availability}
-          class="button"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Google Sheet
-        </a>
-      </p>
-      <hr />
-    </p>
+    <RateBlock />
   </main>
 </Layout>

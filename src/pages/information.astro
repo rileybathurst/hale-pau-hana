@@ -2,35 +2,12 @@
 import fetchApi from "../lib/strapi";
 import Layout from "../layouts/Layout.astro";
 import type TextTypes from "../interfaces/text-types";
-// import type RateTypes from "../interfaces/rate-types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 const information = await fetchApi<TextTypes>({
   endpoint: "info",
   wrappedByKey: "data",
 });
-
-/* const rate = await fetchApi<RateTypes>({
-  endpoint: "rate",
-  wrappedByKey: "data",
-  populate: {
-    taxId: { populate: true },
-    children: {
-      populate: true,
-    },
-    cleaning: {
-      populate: true,
-    },
-    direct: {
-      populate: true,
-    },
-    taxRate: {
-      populate: true,
-    },
-  },
-}); */
-
-// console.log(information);
 ---
 
 <Layout title="Information">

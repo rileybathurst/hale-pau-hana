@@ -8,30 +8,11 @@ import FormatPhoneNumber from "../components/FormatPhoneNumber";
 const contact = await fetchApi<ContactTypes>({
   endpoint: "contact",
   wrappedByKey: "data",
-  /* populate: {
-    name: {
-      populate: true,
-    },
-    email: {
-      populate: true,
-    },
-    phone: {
-      populate: true,
-    },
-    postal: {
-      populate: true,
-    },
-  }, */
 });
 
 const address = await fetchApi<AddressTypes>({
   endpoint: "address",
   wrappedByKey: "data",
-  /* populate: {
-    building: {
-      populate: true,
-    },
-  }, */
 });
 ---
 
@@ -39,19 +20,17 @@ const address = await fetchApi<AddressTypes>({
   <h4 class="font-hand">Contact</h4>
   <p class="stork">
     If you want to reserve a date or have comments or questions, please email or
-    call
+    call {contact.name}
   </p>
-  <p>{contact.name}</p>
-  <p>
-    <a href={`mailto:${contact.email}?subject=${address.building}`}>
-      {contact.email}
-    </a>
-  </p>
-  <p>
-    <a href={`tel:${contact.phone}`}>
-      <FormatPhoneNumber phoneNumberString={contact.phone} />
-    </a>
-  </p>
+  <a
+    href={`mailto:${contact.email}?subject=${address.building}`}
+    class="button"
+  >
+    {contact.email}
+  </a>
+  <a href={`tel:${contact.phone}`} class="button">
+    <FormatPhoneNumber phoneNumberString={contact.phone} />
+  </a>
 
   <div class="pre-wrap">
     <BlocksRenderer content={contact.postal} />
@@ -60,6 +39,4 @@ const address = await fetchApi<AddressTypes>({
   <hr />
   <p class="font-hand">{address.building}</p>
   <p>© {new Date().getFullYear()}</p>
-
-  <!-- <a href="/ammenities">Ammenities</a> -->
 </footer>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import MenuList from './MenuList';
-
-export default function SmallMenu() {
+export default function SmallMenu({ menuItems }: { menuItems: { label: string; href: string }[] }) {
 
   const [slide, setSlide] = useState('firstload');
   // console.log(slide);
@@ -11,22 +9,15 @@ export default function SmallMenu() {
   // const ref = useRef();
   const ref = useRef<HTMLElement | null>(null);
 
-  /* interface currentTypes {
-      current: {
-        clientHeight: number;
-      };
-    } */
-
   useEffect(() => {
-    ref.current ? setAmount(ref.current.clientHeight) : null;
-  }, []);
+    if (ref.current) {
+      setAmount(ref.current.clientHeight);
+    }
+  }, [slide, menuItems]);
+
+  // console.log(slide);
 
   if (slide === "firstload") {
-
-    useEffect(() => {
-      ref.current ? setAmount(ref.current.clientHeight) : null;
-    });
-
     // console.log(slide);
 
     return (
@@ -51,7 +42,20 @@ export default function SmallMenu() {
           ref={ref}
         >
           <menu>
-            <MenuList />
+            <ul>
+              {menuItems.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    {...(item.href.includes("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </menu>
         </nav>
       </div >
@@ -59,11 +63,6 @@ export default function SmallMenu() {
   }
 
   if (slide === "open") {
-
-    useEffect(() => {
-      ref.current ? setAmount(ref.current.clientHeight) : null;
-    });
-
     // console.log(slide);
 
     return (
@@ -84,7 +83,20 @@ export default function SmallMenu() {
           ref={ref}
         >
           <menu>
-            <MenuList />
+            <ul>
+              {menuItems.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    {...(item.href.includes("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </menu>
         </nav>
       </div>
@@ -92,12 +104,7 @@ export default function SmallMenu() {
   }
 
   if (slide === "closed") {
-
     // console.log(slide);
-
-    useEffect(() => {
-      ref.current ? setAmount(ref.current.clientHeight) : null;
-    });
 
     return (
       <div className='small-menu'
@@ -121,7 +128,20 @@ export default function SmallMenu() {
           ref={ref}
         >
           <menu>
-            <MenuList />
+            <ul>
+              {menuItems.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    {...(item.href.includes("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </menu>
         </nav>
       </div>

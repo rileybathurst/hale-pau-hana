@@ -8,14 +8,11 @@ import fetchApi from "../lib/strapi";
 import { Image } from "astro:assets";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import ApartmentLayout from "../images/ApartmentLayout.astro";
-// import type TextTypes from "../interfaces/text-types";
-// import type AddressTypes from "../interfaces/address-types";
-import type RateTypes from "../interfaces/rate-types";
 import type AboutTypes from "../interfaces/about-types";
 import type TextImageTypes from "../interfaces/text-images-types";
-import RateTable from "../components/rate-table.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
 import type SurfCamTypes from "../interfaces/surf-cam-types";
+import RateBlock from "../components/rate-block.astro";
 
 const activity = await fetchApi<TextImageTypes>({
   endpoint: "activity",
@@ -35,11 +32,6 @@ const surfCam = await fetchApi<SurfCamTypes>({
       populate: true,
     },
   },
-});
-
-const rate = await fetchApi<RateTypes>({
-  endpoint: "rate",
-  wrappedByKey: "data",
 });
 
 const amenitie = await fetchApi<TextImageTypes>({
@@ -62,24 +54,6 @@ const about = await fetchApi<AboutTypes>({
   },
   fields: ["images"],
 });
-
-// console.log(about);
-
-// const peak_season_start = new Date(rate.peak_season_start);
-
-// const peak_season_end = new Date(rate.peak_season_end);
-// console.log(peak_season_end);
-
-const off_season_start = new Date(rate.peak_season_start);
-off_season_start.setDate(off_season_start.getDate() - 1);
-// console.log(off_season_start);
-
-const off_season_end = new Date(rate.peak_season_end);
-off_season_end.setDate(off_season_end.getDate() + 1);
-// console.log(off_season_end);
-
-// console log the month and day of off_season_start as a DateString
-// console.log(off_season_start.toLocaleString("default", { month: "long" }));
 ---
 
 <Layout title="Welcome">
@@ -105,45 +79,8 @@ off_season_end.setDate(off_season_end.getDate() + 1);
         ))
     }
   </div>
-  <!-- TODO: make this its own page -->
   <main>
-    <hr />
-    <h2 class="font-hand">Rates</h2>
-    <p>
-      If you want to reserve a date or have comments or questions, please email
-      or call
-    </p>
-    <a
-      href={rate.availability}
-      class="button"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Availability
-    </a>
-
-    <hr />
-    <RateTable />
-    <hr />
-
-    <BlocksRenderer content={rate.direct} />
-    <p>Hawaii Hotel & excise Tax is %{rate.taxRate} additional</p>
-    <hr />
-    <h3>Cleaning</h3>
-    <BlocksRenderer content={rate.cleaning} />
-    <hr />
-    <h3>Avaliablity</h3>
-    <p>
-      <a
-        href={rate.availability}
-        class="button"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Google Sheet
-      </a>
-    </p>
-    <hr />
+    <RateBlock />
   </main>
 
   <div class="pelican wrap">

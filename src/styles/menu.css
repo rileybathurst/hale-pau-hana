@@ -84,3 +84,12 @@
 }
 
 /*------------------------------------*/
+
+.show-above-condor {
+  display: none;
+
+  /* above show */
+  @media (min-width: 30rem) {
+    display: revert;
+  }
+}

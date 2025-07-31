@@ -143,3 +143,11 @@ footer {
     background-color: var(--black-metal);
   }
 }
+
+/*------------------------------------*/
+
+.header-to-button {
+  display: flex;
+  gap: var(--elbrus);
+  align-items: center;
+}

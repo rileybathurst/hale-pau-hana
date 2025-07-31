@@ -6,24 +6,11 @@ import type TextTypes from "../interfaces/text-types";
 import type AddressTypes from "../interfaces/address-types";
 import type ContactTypes from "../interfaces/contact-types";
 import FormatPhoneNumber from "../components/FormatPhoneNumber";
+import type RateTypes from "../interfaces/rate-types";
 
 const contact = await fetchApi<ContactTypes>({
   endpoint: "contact",
   wrappedByKey: "data",
-  /* populate: {
-    name: {
-      populate: true,
-    },
-    email: {
-      populate: true,
-    },
-    phone: {
-      populate: true,
-    },
-    postal: {
-      populate: true,
-    },
-  }, */
 });
 
 const about = await fetchApi<TextTypes>({
@@ -39,40 +26,23 @@ const about = await fetchApi<TextTypes>({
 const address = await fetchApi<AddressTypes>({
   endpoint: "address",
   wrappedByKey: "data",
-  /* populate: {
-    streetAddress: {
-      populate: true,
-    },
-    addressLocality: {
-      populate: true,
-    },
-    addressRegion: {
-      populate: true,
-    },
-    addressCountry: {
-      populate: true,
-    },
-    postalCode: {
-      populate: true,
-    },
-    unit: {
-      populate: true,
-    },
-    island: {
-      populate: true,
-    },
-    building: {
-      populate: true,
-    },
-    googleMapLink: {
-      populate: true,
-    },
-  }, */
 });
 
-// console.log(address);
+const rate = await fetchApi<RateTypes>({
+  endpoint: "rate",
+  wrappedByKey: "data",
+});
 
-// console.log(Astro.url.pathname);
+// console.log(rate.availability);
+
+const menuItems: { label: string; href: string }[] = [
+  { label: "Directions", href: "/directions/" },
+  { label: "Information", href: "/information/" },
+  { label: "Activities", href: "/see-and-do/" },
+  { label: "Departure", href: "/departure/" },
+  { label: "Rates", href: "/rates/" },
+  { label: "Availability", href: rate.availability },
+];
 ---
 
 <header class="header">
@@ -81,14 +51,16 @@ const address = await fetchApi<AddressTypes>({
       {address.building}
     </a>
   </h1>
-  {
-    about?.text ? (
-      <div class="kilimanjaro-p text-center">
-        <BlocksRenderer content={about?.text} />
-      </div>
-    ) : null
-  }
-  <hr />
+  <address class="elbrus text-center">
+    <a href={address.googleMapLink} target="_blank" rel="noopener noreferrer">
+      {address.streetAddress}
+      <br />
+      {address.addressLocality},
+      {address.island} - {
+        address.addressRegion == "HI" ? "Hawaii" : address.addressRegion
+      }
+    </a>
+  </address>
   <p class="text-center">
     <a
       href={`mailto:${contact.email}?subject=${address.building}`}
@@ -101,87 +73,34 @@ const address = await fetchApi<AddressTypes>({
     </a>
   </p>
 
-  <hr />
+  <hr class="show-above-condor" />
 
-  <SmallMenu client:load />
+  <SmallMenu client:load menuItems={menuItems} />
 
-  <!-- TODO: update this to current -->
   <nav class="big-boy">
     <ul>
-      <li>
-        <a
-          href="/directions"
-          class={Astro.url.pathname === "/directions" ||
-          Astro.url.pathname === "/directions/"
-            ? "current"
-            : null}
-        >
-          Directions
-        </a>
-      </li>
-      <li>
-        <a
-          href="/information"
-          class={Astro.url.pathname === "/information" ||
-          Astro.url.pathname === "/information/"
-            ? "current"
-            : null}
-        >
-          Information
-        </a>
-      </li>
-      <li>
-        <a
-          href="/see-and-do"
-          class={Astro.url.pathname === "/see-and-do" ||
-          Astro.url.pathname === "/see-and-do/"
-            ? "current"
-            : null}
-        >
-          Activities
-        </a>
-      </li>
-      <li>
-        <a
-          href="/departure"
-          class={Astro.url.pathname === "/departure" ||
-          Astro.url.pathname === "/departure/"
-            ? "current"
-            : null}
-        >
-          Departure
-        </a>
-      </li>
-      <li>
-        <a
-          href="/rates"
-          class={Astro.url.pathname === "/rates" ||
-          Astro.url.pathname === "/rates/"
-            ? "current"
-            : null}
-        >
-          Rates
-        </a>
-      </li>
-      <li>
-        <a
-          href="https://docs.google.com/spreadsheets/d/1ACJAro0VvyIFJ-pVkg10v1InZZX4FY0yavQSbAJ5feI/edit?gid=0#gid=0"
-        >
-          Availability
-        </a>
-      </li>
+      {
+        menuItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              {...(item.href.includes("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+              class={
+                Astro.url.pathname === item.href ||
+                Astro.url.pathname === item.href + "/"
+                  ? "current"
+                  : null
+              }
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 
-  <hr />
-  <address class="elbrus text-center">
-    <a href={address.googleMapLink} target="_blank" rel="noopener noreferrer">
-      {address.streetAddress}
-      <br />
-      {address.addressLocality},
-      {address.island} - {
-        address.addressRegion == "HI" ? "Hawaii" : address.addressRegion
-      }
-    </a>
-  </address>
+  <hr class="show-above-condor" />
 </header>

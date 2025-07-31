@@ -1,7 +1,6 @@
 import type { BlocksContent } from "@strapi/blocks-react-renderer";
 
 export default interface RateTypes {
-  taxId: string;
   children: BlocksContent;
   cleaning: BlocksContent;
   direct: BlocksContent;
