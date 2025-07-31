@@ -12,7 +12,6 @@ interface fetchApiTypes {
       populate: boolean;
     };
   };
-  fields?: string[];
 }
 
 /**
@@ -21,7 +20,6 @@ interface fetchApiTypes {
  * @param query - The query parameters to add to the url
  * @param wrappedByKey - The key to unwrap the response from
  * @param wrappedByList - If the response is a list, unwrap it
- * @param populate - The fields to populate
  * @returns
  */
 
@@ -31,37 +29,20 @@ export default async function fetchApi<T>({
   wrappedByKey,
   wrappedByList,
   populate,
-  fields,
 }: fetchApiTypes): Promise<T> {
   if (endpoint.startsWith("/")) {
     endpoint = endpoint.slice(1);
   }
-
-/* const fieldPasser = {
-    fields: fields,
-  }; */
-
-  // ${populate ? `?${qs.stringify({ populate })}` : ""}
-  // console.log(populate ? `?${qs.stringify({ populate })}` : "")
-
-  // Use the stringify() method on the object
-  // const passedFields = querystring.stringify(fieldPasser);
-
-  // console.log(passedFields);
 
   // * the line breaks are important to not get whitespace in the url
 
   const url = new URL(
     `
     ${import.meta.env.STRAPI_URL}api/${endpoint}${
-      populate ? `?${qs.stringify({populate})}` : ""
+      populate ? `?${qs.stringify({ populate })}` : ""
     }
   `
   );
-
-  // with populate and no ggraphiql checking the structure on the api helps
-  // console.log(url);
-  // console.log(url.href);
 
   if (query) {
     for (const [key, value] of Object.entries(query)) {

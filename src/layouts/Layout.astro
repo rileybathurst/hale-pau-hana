@@ -6,7 +6,6 @@ interface Props {
   title: string;
 }
 const { title } = Astro.props;
-import { ViewTransitions } from "astro:transitions";
 import Header from "../layouts/header.astro";
 import Footer from "../layouts/footer.astro";
 ---
@@ -20,7 +19,6 @@ import Footer from "../layouts/footer.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | Hale Pau Hana</title>
-    <ViewTransitions />
   </head>
   <>
     <Header />
@@ -29,4 +27,5 @@ import Footer from "../layouts/footer.astro";
 
     <Footer />
   </>
+
 </html>

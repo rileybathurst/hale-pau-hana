@@ -1,8 +1,6 @@
 ---
 import fetchApi from "../lib/strapi";
 import SmallMenu from "../components/SmallMenu";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import type TextTypes from "../interfaces/text-types";
 import type AddressTypes from "../interfaces/address-types";
 import type ContactTypes from "../interfaces/contact-types";
 import FormatPhoneNumber from "../components/FormatPhoneNumber";
@@ -11,16 +9,6 @@ import type RateTypes from "../interfaces/rate-types";
 const contact = await fetchApi<ContactTypes>({
   endpoint: "contact",
   wrappedByKey: "data",
-});
-
-const about = await fetchApi<TextTypes>({
-  endpoint: "about",
-  wrappedByKey: "data",
-  populate: {
-    text: {
-      populate: true,
-    },
-  },
 });
 
 const address = await fetchApi<AddressTypes>({
