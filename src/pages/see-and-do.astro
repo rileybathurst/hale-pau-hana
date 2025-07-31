@@ -4,15 +4,24 @@ import fetchApi from "../lib/strapi";
 import type TextImageTypes from "../interfaces/text-images-types";
 import { Image } from "astro:assets";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { YouTube } from "@astro-community/astro-embed-youtube";
+import type SurfCamTypes from "../interfaces/surf-cam-types";
 
 const activity = await fetchApi<TextImageTypes>({
   endpoint: "activity",
   wrappedByKey: "data",
   populate: {
-    /* text: {
-      populate: true,
-    }, */
     images: {
+      populate: true,
+    },
+  },
+});
+
+const surfCam = await fetchApi<SurfCamTypes>({
+  endpoint: "surf-cam",
+  wrappedByKey: "data",
+  populate: {
+    poster: {
       populate: true,
     },
   },
@@ -41,5 +50,8 @@ const activity = await fetchApi<TextImageTypes>({
   <main>
     <h2 class="font-hand">Things to see and do</h2>
     <BlocksRenderer content={activity.text} />
+
+    <h3 class="font-hand">Live Surf Cam</h3>
+    <YouTube id={surfCam.youtube} poster={surfCam.poster.formats.small.url} />
   </main>
 </Layout>
