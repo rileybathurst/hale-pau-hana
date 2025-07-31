@@ -2,16 +2,11 @@
 import fetchApi from "../lib/strapi";
 import type TextTypes from "../interfaces/text-types";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import Layout from "../layouts/Layout.astro";
+import Layout from "../layouts/layout.astro";
 
 const departure = await fetchApi<TextTypes>({
   endpoint: "departure",
   wrappedByKey: "data",
-  /* populate: {
-    text: {
-      populate: true,
-    },
-  }, */
 });
 ---
 
