@@ -3,17 +3,16 @@
   "type": "module",
   "version": "0.2.0",
   "scripts": {
-    "dev": "astro dev --remote",
-    "start": "astro dev",
-    "build": "astro check && astro build --remote",
-    "preview": "astro preview",
+    "dev": "astro check && stay-gold && astro dev --remote",
+    "build": "astro check && stay-gold && astro build --remote",
+    "preview": "astro check && stay-gold && astro preview",
     "astro": "astro",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.6",
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.3.0",
     "@fontsource/pacifico": "^5.2.6",
     "@strapi/blocks-react-renderer": "^1.0.2",
@@ -26,10 +25,10 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
-    "typescript": "^5.8.3"
+    "stay-gold": "^1.1.8",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.1.2",
     "@faker-js/faker": "^9.9.0",
     "@types/qs": "^6.14.0"
   }

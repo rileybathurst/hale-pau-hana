@@ -7,8 +7,10 @@ export default interface RateTypes {
   taxRate: number;
   peak_season_start: string;
   peak_season_end: string;
-  off_season_rate: number;
-  peak_rate: number;
+  off_season_rate_min: number;
+  off_season_rate_max: number;
+  peak_rate_min: number;
+  peak_rate_max: number;
   availability: string;
-}
-[];
+  call_to_action: string;
+};

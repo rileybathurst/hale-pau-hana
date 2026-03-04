@@ -9,6 +9,8 @@ const rate = await fetchApi<RateTypes>({
   wrappedByKey: "data",
 });
 
+// TODO: UTC version of this
+
 // const peak_season_start = new Date(rate.peak_season_start);
 
 // const peak_season_end = new Date(rate.peak_season_end);
@@ -38,10 +40,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
     Availability
   </a>
 </div>
-<p>
-  If you want to reserve a date or have comments or questions, please email or
-  call
-</p>
+<p>{rate.call_to_action}</p>
 
 <hr />
 <RateTable />

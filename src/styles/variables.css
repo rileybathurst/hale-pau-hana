@@ -96,10 +96,10 @@
   --palm-300: oklch(45% 0.1 150);
   --palm-400: oklch(30% 0.1 150);
 
-  --mango-50: oklch(98.82% 0.027 90);
-  --mango-100: oklch(95% 0.075 90); /* ! P3 only */
-  --mango-200: oklch(90% 0.125 80);
-  --mango-300: oklch(80% 0.15 70); /* default */
-  --mango-400: oklch(75% 0.2 70);
-  --mango-500: oklch(45% 0.2 70);
+  --mango-50: oklch(0.975 0.027 90);
+  --mango-100: oklch(0.94 0.075 90);
+  --mango-200: oklch(0.9 0.125 80);
+  --mango-300: oklch(0.8 0.15 70); /* default */
+  --mango-400: oklch(0.75 0.2 70);
+  --mango-500: oklch(0.45 0.2 70);
 }

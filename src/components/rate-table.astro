@@ -26,7 +26,9 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 <section class="season">
   <!-- ? should this be a hyphen or colon -->
   <h3 class="title kilimanjaro">
-    Off Season - ${rate.off_season_rate}
+    
+    Off Season {rate.off_season_rate_min !== rate.off_season_rate_max ? `- $${rate.off_season_rate_min} to $${rate.off_season_rate_max}` : `- $${rate.off_season_rate_min}`}
+
   </h3>
   <div class="cal-date">
     <span class="month">
@@ -49,7 +51,7 @@ off_season_end.setDate(off_season_end.getDate() + 1);
 
 <section class="season">
   <h3 class="title kilimanjaro">
-    Peak Season : ${rate.peak_rate}
+    Peak Season {rate.peak_rate_min !== rate.peak_rate_max ? `- $${rate.peak_rate_min} to $${rate.peak_rate_max}` : `- $${rate.peak_rate_min}`}
   </h3>
   <div class="cal-date">
     <span class="month">
